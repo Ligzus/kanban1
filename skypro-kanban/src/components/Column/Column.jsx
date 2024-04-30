@@ -1,17 +1,20 @@
 import Card from "../Card/Card";
 
-const Column = ({ title }) => {
+const Column = ({ title, cardList }) => {
     return (
         <div className="main__column">
               <div className="column__title">
                 <p>{title}</p>
               </div>
               <div className="cards">
-                    <Card 
-                        category="Web Design" 
-                        title="Название задачи"
-                        date="30.10.2023"
-                    />
+                {cardList.map((card) => (
+                <Card 
+                  key={card.id}
+                  category={card.category} 
+                  title={card.title}
+                  date={new Date().toLocaleString()}
+                  status={card.status}
+                />))}                
               </div>
             </div>
     )

@@ -1,6 +1,6 @@
 import Calendar from "../../Calendar/Calendar";
 
-const PopNewCard = () => {
+const PopNewCard = ({ addCard }) => {
     return (
         <div className="pop-new-card" id="popNewCard">
         <div className="pop-new-card__container">
@@ -39,7 +39,7 @@ const PopNewCard = () => {
                 </div>
               </div>
             </div>
-            <button className="form-new__create _hover01" id="btnCreate">Создать задачу</button>
+            <button className="form-new__create _hover01" id="btnCreate" onClick={addCard}>Создать задачу</button>
           </div>
         </div>
         </div>
