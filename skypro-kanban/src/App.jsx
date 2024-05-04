@@ -6,6 +6,7 @@ import PopBrowse from './components/PopUps/PopBrowse/PopBrowse.jsx'
 import PopExit from './components/PopUps/PopExit.jsx'
 import { useEffect, useState } from "react";
 import { cardList, statusList } from "./data";
+import { GlobalStyle } from './Global.styled.js'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -27,24 +28,28 @@ function App() {
     setTimeout(() => setIsLoading(false), 2000)
   }, []);
 
-  return (  
-    <div className="wrapper">
-    
-      {/* Компонент Логаут */}
-      <PopExit />
+  return ( 
+    <>
+      <GlobalStyle />
 
-      {/* Компонент Созданиня задачи */}
-      <PopNewCard addCard={addCard} />
+      <div className="wrapper">
+      
+        {/* Компонент Логаут */}
+        <PopExit />
 
-      {/* Компонент Просмотра деталей задачи */}
-      <PopBrowse />
-    
-      {/* Компонент Header */}
-      <Header />
+        {/* Компонент Созданиня задачи */}
+        <PopNewCard addCard={addCard} />
 
-      {/* Компонент Main с прелоадером */}
-      {isLoading ? <p>Загружаю задачи...</p> : <Main cards={cards} />}  
-  </div>)
+        {/* Компонент Просмотра деталей задачи */}
+        <PopBrowse />
+      
+        {/* Компонент Header */}
+        <Header />
+
+        {/* Компонент Main с прелоадером */}
+        {isLoading ? <p>Загружаю задачи...</p> : <Main cards={cards} />}  
+      </div>
+    </>)
 }
 
 export default App
