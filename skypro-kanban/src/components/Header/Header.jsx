@@ -22,10 +22,7 @@ const Header = () => {
           <S.Nav>  
               <S.CreateTaskBtn id="btnMainNew">
                 <a href="#popNewCard">Создать новую задачу</a>  
-              </S.CreateTaskBtn>        
-              {/* <button className="header__btn-main-new _hover01" id="btnMainNew">
-                <a href="#popNewCard">Создать новую задачу</a>
-              </button> */}
+              </S.CreateTaskBtn>     
             <a href="#user-set-target" className="header__user _hover02" onClick={toggleModal}>Ivan Ivanov</a>
             <div className="header__pop-user-set pop-user-set" id="user-set-target" style={{ display: modalVisible ? 'block' : 'none' }}>
               <p className="pop-user-set__name">Ivan Ivanov</p>
