@@ -1,5 +1,4 @@
 import { getTopicColor } from "../../data";
-import { Cards } from "../Column/Column.styled";
 import { CardContent, CardDate, CardDateText, CardTopic, CardsCard, CardsGroup, CardsItem, TopicText } from "./Card.styled";
 
 const Card = ({category, title, date}) => {

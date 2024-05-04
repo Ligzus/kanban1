@@ -18,7 +18,7 @@ function App() {
       id: cards.length + 1,
       category: "Web Design", 
       title: "Самая новая задача", 
-      date: new Date().toLocaleString(), 
+      date: new Date().toLocaleDateString(), 
       status: statusList[0],
     }
 
