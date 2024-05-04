@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
-    width: 178px;
-    height: 30px;
+export const Button = styled.button` 
     border-radius: 4px;
     background-color: #565EEF;
     color: #FFFFFF;
@@ -21,12 +19,11 @@ export const Button = styled.button`
     border-radius: 4px;
     margin-right: 0;
 
-    Button:hover {
+    &:hover {
         background-color: #33399b;
     }
 
-    Button a {
+    & a {
         color: #FFFFFF;
     }
 `;
-

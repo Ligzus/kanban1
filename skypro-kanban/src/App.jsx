@@ -7,6 +7,7 @@ import PopExit from './components/PopUps/PopExit.jsx'
 import { useEffect, useState } from "react";
 import { cardList, statusList } from "./data";
 import { GlobalStyle } from './Global.styled.js'
+import { Loader } from './lib/Loader.styled.js'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -47,7 +48,7 @@ function App() {
         <Header />
 
         {/* Компонент Main с прелоадером */}
-        {isLoading ? <p>Загружаю задачи...</p> : <Main cards={cards} />}  
+        {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={cards} />}  
       </div>
     </>)
 }
