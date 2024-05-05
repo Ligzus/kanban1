@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { getTopicColor } from "../../data";
 import { CardContent, CardDate, CardDateText, CardTopic, CardsCard, CardsGroup, CardsItem, TopicText } from "./Card.styled";
 
@@ -19,9 +20,9 @@ const Card = ({category, title, date}) => {
                     </a>
                 </CardsGroup>
                 <CardContent>
-                    <a href="" target="_blank">
+                    <Link to={'/'}>
                         <h3 className="card__title">{title}</h3>
-                    </a>
+                    </Link>
                     <CardDate>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
                             <g clipPath="url(#clip0_1_415)">
