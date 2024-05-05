@@ -38,4 +38,14 @@ export const cardList = [
         date: "30.10.2023", 
         status: statusList[3],
     }
-]
+];
+
+export const getTopicColor = (category) => {
+    if (category === "Web Design") {
+        return "_orange"
+    } else if (category === "Copywriting") {
+        return "_purple"
+    } else if (category === "Research") {
+        return "_green"
+    } else {return "_gray"}    
+}
