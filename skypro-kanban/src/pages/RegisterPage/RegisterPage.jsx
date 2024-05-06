@@ -1,7 +1,13 @@
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormGroupLink, ModalFormLogin, ModalTtl, Wrapper } from "../LoginPage/Login.styled";
-
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+    let navigate = useNavigate();
+
+    function goToLogin() {
+        navigate('/login');
+    }
+
     return (
 		<Wrapper>
             <ContainerSignin>
@@ -22,7 +28,7 @@ function Register() {
 
                             <ModalFormGroup>
                                 <ModalFormGroupText>Уже есть аккаунт?</ModalFormGroupText>
-                                <ModalFormGroupLink>Войдите здесь</ModalFormGroupLink>
+                                <ModalFormGroupLink onClick={goToLogin}>Войдите здесь</ModalFormGroupLink>
                             </ModalFormGroup>
 
                         </ModalFormLogin>
