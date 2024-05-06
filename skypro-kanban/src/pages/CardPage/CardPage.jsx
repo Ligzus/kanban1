@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { cardList } from "../../data";
+import PopBrowse from '../../components/PopUps/PopBrowse/PopBrowse';
+
 
 function CurrentCard() {
     let { id } = useParams();
-    const card = cardList.find(card => card.id === parseInt(id));
 
-    return <div>Страница пользователя с ID: {id}</div>;
+    return <PopBrowse id={id} />;
 }
 
 export default CurrentCard;
