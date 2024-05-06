@@ -1,12 +1,11 @@
-import '../App.css'
-import Header from '../components/Header/Header.jsx'
-import Main from '../components/Main/Main.jsx'
-import PopNewCard from '../components/PopUps/NewCard/PopNewCard.jsx'
-import PopBrowse from '../components/PopUps/PopBrowse/PopBrowse.jsx'
-import PopExit from '../components/PopUps/PopExit.jsx'
+import Header from '../../components/Header/Header.jsx'
+import Main from '../../components/Main/Main.jsx'
+import PopNewCard from '../../components/PopUps/NewCard/PopNewCard.jsx'
+import PopBrowse from '../../components/PopUps/PopBrowse/PopBrowse.jsx'
+import PopExit from '../../components/PopUps/PopExit.jsx'
 import { useEffect, useState } from "react";
-import { cardList, statusList } from "../data";
-import { Loader } from '../lib/Loader.styled.js'
+import { cardList, statusList } from "../../data.js";
+import { Loader } from '../../lib/Loader.styled.js'
 
 function Home() {
 

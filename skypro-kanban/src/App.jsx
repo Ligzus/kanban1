@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import './App.css'
 import { GlobalStyle } from './Global.styled.js'
 import { Route, Routes } from 'react-router-dom'
-import HomePage from './pages/HomePage.jsx'
-import LoginPage from './pages/LoginPage.jsx'
-import RegisterPage from './pages/RegisterPage.jsx'
+import HomePage from './pages/HomePage/HomePage.jsx'
+import LoginPage from './pages/LoginPage/LoginPage.jsx'
+import RegisterPage from './pages/RegisterPage/RegisterPage.jsx'
 
 
 function App() {
