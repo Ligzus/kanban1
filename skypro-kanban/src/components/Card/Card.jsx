@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { getTopicColor } from "../../data";
 import { CardContent, CardDate, CardDateText, CardTopic, CardsCard, CardsGroup, CardsItem, TopicText } from "./Card.styled";
 
-const Card = ({category, title, date}) => {
+
+const Card = ({category, title, date, id}) => {
     const topicColor = getTopicColor(category)
     return (
         <CardsItem>
@@ -10,19 +11,27 @@ const Card = ({category, title, date}) => {
                 <CardsGroup>
                     <CardTopic $topicColor= {topicColor}>
                         <TopicText>{category}</TopicText>
-                    </CardTopic>                    
-                    <a href="#popBrowse" target="_self">
+                    </CardTopic>
+                    <Link to={`/card/${id}`}>
+                        <div className="card__btn">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>    
+                    </Link>                                  
+                    {/* <a href="#popBrowse" target="_self">
                     <div className="card__btn">
                         <div></div>
                         <div></div>
                         <div></div>
                     </div>
-                    </a>
+                    </a> */}
                 </CardsGroup>
                 <CardContent>
-                    <Link to={'/'}>
+                    <Link to={`/card/${id}`}>
                         <h3 className="card__title">{title}</h3>
-                    </Link>
+                    </Link> 
+                    {/* <a><h3 className="card__title">{title}</h3></a> */}
                     <CardDate>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
                             <g clipPath="url(#clip0_1_415)">

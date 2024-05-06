@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage/HomePage.jsx'
 import LoginPage from './pages/LoginPage/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage/RegisterPage.jsx'
+import CurrentCard from './pages/CardPage/CardPage.jsx'
 
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
       <Routes>
         
         <Route path='/' element={<HomePage />} />
-        {/* <Route path='/card/:id' element={<CardPage />} />
-        <Route path='/exit' element={<ExitPage />} /> */}
+        <Route path='/card/:id' element={<CurrentCard />} />
+        {/* <Route path='/exit' element={<ExitPage />} /> */}
 
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
