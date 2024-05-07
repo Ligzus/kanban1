@@ -6,6 +6,7 @@ import PopExit from '../../components/PopUps/PopExit.jsx'
 import { useEffect, useState } from "react";
 import { cardList, statusList } from "../../data.js";
 import { Loader } from '../../lib/Loader.styled.js'
+import { Outlet } from 'react-router-dom'
 
 function Home() {
 
@@ -34,19 +35,21 @@ function Home() {
         <div className="wrapper">
 
             {/* Компонент Логаут */}
-            <PopExit />
+            {/* <PopExit /> */}
 
             {/* Компонент Созданиня задачи */}
-            <PopNewCard addCard={addCard} />
+            {/* <PopNewCard addCard={addCard} /> */}
 
             {/* Компонент Просмотра деталей задачи */}
-            <PopBrowse />
+            {/* <PopBrowse /> */}
 
             {/* Компонент Header */}
             <Header />
 
             {/* Компонент Main с прелоадером */}
             {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={cards} />}  
+
+            <Outlet />
             
         </div>
     </>

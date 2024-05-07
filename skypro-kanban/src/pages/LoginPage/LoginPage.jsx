@@ -1,12 +1,17 @@
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormLogin, ModalTtl, Wrapper, ModalFormGroupLink } from "./Login.styled";
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({ login }) {
 
     let navigate = useNavigate();
 
     function goToReg() {
         navigate('/register');
+    }
+
+    function onLogin() {
+        login(true);
+        navigate('/')
     }
     
     return (        
@@ -23,7 +28,7 @@ function Login() {
                             <LoginInputPassword type="password" name="password" id="formpassword" placeholder="Пароль"></LoginInputPassword>                     
 
                             <ModalBtnEnter id="btnEnter">
-                                <ModalBtnEnterLink>Войти</ModalBtnEnterLink>
+                                <ModalBtnEnterLink onClick={onLogin}>Войти</ModalBtnEnterLink>
                             </ModalBtnEnter>                      
 
                             <ModalFormGroup>

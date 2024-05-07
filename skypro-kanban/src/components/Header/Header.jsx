@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import * as S from '../Header/Header.styled'
 import { Container } from '../Header/Header.styled';
+import { Link } from 'react-router-dom';
+import ExitPage from '../../pages/ExitPage/ExitPage';
 
 const Header = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,7 +33,9 @@ const Header = () => {
                 <p>Темная тема</p>
                 <input type="checkbox" className="checkbox" name="checkbox" />
               </div>
-              <button type="button" className="_hover03"><a href="#popExit">Выйти</a></button>
+              <button type="button" className="_hover03">
+                <Link to={'/exit'}>Выйти</Link>
+              </button>
             </div>
           </S.Nav>  			
         </S.Block>

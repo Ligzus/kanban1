@@ -138,7 +138,7 @@ export const ModalBtnEnter = styled.button`
 `;
 
 
-export const ModalBtnEnterLink = styled.a`
+export const ModalBtnEnterLink = styled.p`
     width: 100%;
     height: 100%;
     color: #FFFFFF;
