@@ -11,7 +11,13 @@ function Login({ login }) {
 
     function onLogin() {
         login(true);
-        navigate('/')
+        navigate('/');
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            onLogin();
+        }
     }
     
     return (        
@@ -22,7 +28,7 @@ function Login({ login }) {
                         <div className="modal__ttl">
                             <ModalTtl>Вход</ModalTtl>
                         </div>
-                        <ModalFormLogin id="formLogIn" action="#">
+                        <ModalFormLogin id="formLogIn" action="#" onKeyDown={handleKeyPress}>
 
                             <LoginInput type="text" name="login" id="formlogin" placeholder="Эл. почта"></LoginInput>
                             <LoginInputPassword type="password" name="password" id="formpassword" placeholder="Пароль"></LoginInputPassword>                     

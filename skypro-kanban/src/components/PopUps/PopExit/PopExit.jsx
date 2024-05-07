@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PopExit = ({ logOut }) => {
   let navigate = useNavigate();
@@ -20,7 +20,9 @@ const PopExit = ({ logOut }) => {
             <button className="pop-exit__exit-yes _hover01" id="exitYes">
               <a onClick={handleSubmit}>Да, выйти</a>
             </button>
-            <button className="pop-exit__exit-no _hover03" id="exitNo"><a href="">Нет, остаться</a> </button>
+            <button className="pop-exit__exit-no _hover03" id="exitNo">
+              <Link to={'/'}>Нет, остаться</Link>
+            </button>
           </div>
         </form>
       </div>
