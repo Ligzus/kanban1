@@ -10,14 +10,11 @@ import PrivateRoute from './PrivateRoute.jsx'
 import ExitPage from './pages/ExitPage/ExitPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import NewCard from './pages/NewCardPage/NewCard.jsx'
-import { cardList } from './data.js'
 
 
 function App() {
   
   const [isAuth, setIsAuth] = useState(false);
-  const [cards, setCards] = useState(cardList);
-
 
   return ( 
     <>
@@ -26,10 +23,10 @@ function App() {
       <Routes>
         
         <Route element={<PrivateRoute isAuth={isAuth} />} >
-          <Route path='/' element={<HomePage cards={cards} />}>
+          <Route path='/' element={<HomePage />}>
             <Route path='/card/:id' element={<CurrentCard />} />
             <Route path='/exit' element={<ExitPage setLogin={setIsAuth} />} />
-            <Route path='/newcard' element={<NewCard addCard={setCards} />} />
+            <Route path='/newcard' element={<NewCard />} />
           </Route>
         </Route>
 

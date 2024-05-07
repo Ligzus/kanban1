@@ -1,8 +1,10 @@
 import PopNewCard from "../../components/PopUps/NewCard/PopNewCard";
+import { cardList } from "../../data";
+import { statusList } from "../../data";
 
 function NewCard() {
 
-    function addCard({ cards }) {
+    function addCard({ ccc }) {
         const newCard = {
             id: cards.length + 1,
             category: cardList[cardList.length - 1].category || "Без кактегории", 
