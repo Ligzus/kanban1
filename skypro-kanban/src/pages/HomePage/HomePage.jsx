@@ -1,7 +1,7 @@
 import Header from '../../components/Header/Header.jsx'
 import Main from '../../components/Main/Main.jsx'
 import { useEffect, useState } from "react";
-import { cardList, statusList } from "../../data.js";
+import { cardList } from "../../data.js";
 import { Loader } from '../../lib/Loader.styled.js'
 import { Outlet } from 'react-router-dom'
 
@@ -24,7 +24,7 @@ function HomePage() {
             {/* Компонент Main с прелоадером */}
             {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={cards} />}  
 
-            <Outlet setCards={setCards} cards={cards} />
+            <Outlet cards={cards} setCards={setCards} />
             
         </div>
 

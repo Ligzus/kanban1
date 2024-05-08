@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "../../Calendar/Calendar";
 import { PopNewCardClose } from "./PopNewCard.styled";
 
-const PopNewCard = ({ addCard }) => {
+const PopNewCard = ({ addCard, cards, setCards }) => {
 
   let navigate = useNavigate()
 
@@ -48,7 +48,7 @@ const PopNewCard = ({ addCard }) => {
                 </div>
               </div>
             </div>
-            <button className="form-new__create _hover01" id="btnCreate" onClick={addCard}>Создать задачу</button>
+            <button className="form-new__create _hover01" id="btnCreate" onClick={() => addCard({ cards, setCards })}>Создать задачу</button>
           </div>
         </div>
         </div>
