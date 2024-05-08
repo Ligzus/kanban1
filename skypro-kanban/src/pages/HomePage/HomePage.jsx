@@ -1,14 +1,12 @@
 import Header from '../../components/Header/Header.jsx'
 import Main from '../../components/Main/Main.jsx'
 import { useEffect, useState } from "react";
-import { cardList } from "../../data.js";
 import { Loader } from '../../lib/Loader.styled.js'
 import { Outlet } from 'react-router-dom'
 
-function HomePage() {
+function HomePage({ cards, setCards }) {
 
-    const [isLoading, setIsLoading] = useState(true)
-    const [cards, setCards] = useState(cardList);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setTimeout(() => setIsLoading(false), 500)

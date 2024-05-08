@@ -1,11 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import PopNewCard from "../../components/PopUps/NewCard/PopNewCard";
 import { statusList } from "../../data";
 
 function NewCard({ cards, setCards }) {
 
-    function addCard() {
+    let navigate = useNavigate();
 
-        console.log(cards);
+    function closeAfterCreate() {
+        navigate('/');
+    }
+    
+    function addCard() {       
 
         const newCard = {            
             id: cards.length + 1,
@@ -15,7 +20,9 @@ function NewCard({ cards, setCards }) {
             status: statusList[0],
         }
     
-        setCards([...cards, newCard]);
+        setCards([...cards, newCard]);        
+
+        closeAfterCreate();
     }
 
     return <PopNewCard addCard={addCard} cards={cards} setCards={setCards} />
