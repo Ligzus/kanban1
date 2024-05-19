@@ -13,6 +13,7 @@ const Column = ({ title, cardList }) => {
             {cardList.map((card) => (
               <Card 
                 key={card.id}
+                id={card.id}
                 category={card.category} 
                 title={card.title}
                 date={new Date().toLocaleDateString()}

@@ -1,56 +1,46 @@
+import React, { useState } from 'react'
 import './App.css'
-import Header from './components/Header/Header.jsx'
-import Main from './components/Main/Main.jsx'
-import PopNewCard from './components/PopUps/NewCard/PopNewCard.jsx'
-import PopBrowse from './components/PopUps/PopBrowse/PopBrowse.jsx'
-import PopExit from './components/PopUps/PopExit.jsx'
-import { useEffect, useState } from "react";
-import { cardList, statusList } from "./data";
 import { GlobalStyle } from './Global.styled.js'
-import { Loader } from './lib/Loader.styled.js'
+import { Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage/HomePage.jsx'
+import LoginPage from './pages/LoginPage/LoginPage.jsx'
+import RegisterPage from './pages/RegisterPage/RegisterPage.jsx'
+import CurrentCard from './pages/CardPage/CardPage.jsx'
+import PrivateRoute from './PrivateRoute.jsx'
+import ExitPage from './pages/ExitPage/ExitPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
+import NewCard from './pages/NewCardPage/NewCard.jsx'
+import { cardList } from './data.js'
+
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  
+  const [isAuth, setIsAuth] = useState(false);
   const [cards, setCards] = useState(cardList);
-
-  const addCard = () => {
-    const newCard = {
-      id: cards.length + 1,
-      category: "Web Design", 
-      title: "Самая новая задача", 
-      date: new Date().toLocaleDateString(), 
-      status: statusList[0],
-    }
-
-    setCards([...cards, newCard]);
-  }
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 2000)
-  }, []);
 
   return ( 
     <>
       <GlobalStyle />
 
-      <div className="wrapper">
-      
-        {/* Компонент Логаут */}
-        <PopExit />
+      <Routes>
+        
+        <Route element={<PrivateRoute isAuth={isAuth} />} >
+          <Route path='/' element={<HomePage cards={cards} setCards={setCards} />}>
+            <Route path='/card/:id' element={<CurrentCard />} />
+            <Route path='/exit' element={<ExitPage setLogin={setIsAuth} />} />
+            <Route path='/newcard' element={<NewCard cards={cards} setCards={setCards} />} />
+          </Route>
+        </Route>
 
-        {/* Компонент Созданиня задачи */}
-        <PopNewCard addCard={addCard} />
+        <Route path='/login' element={<LoginPage login={setIsAuth} />} />
+        <Route path='/register' element={<RegisterPage />} />
 
-        {/* Компонент Просмотра деталей задачи */}
-        <PopBrowse />
-      
-        {/* Компонент Header */}
-        <Header />
+        <Route path="*" element={<NotFoundPage />} />
+                
+      </Routes>
 
-        {/* Компонент Main с прелоадером */}
-        {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={cards} />}  
-      </div>
-    </>)
+    </>
+  )
 }
 
-export default App
+export default App;
