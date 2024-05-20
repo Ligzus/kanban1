@@ -16,7 +16,7 @@ import { cardList } from './data.js'
 function App() {
   
   const [isAuth, setIsAuth] = useState(false);
-  const [cards, setCards] = useState(cardList);
+  const [cards, setCards] = useState([]);
 
   return ( 
     <>
@@ -25,7 +25,7 @@ function App() {
       <Routes>
         
         <Route element={<PrivateRoute isAuth={isAuth} />} >
-          <Route path='/' element={<HomePage cards={cards} setCards={setCards} />}>
+          <Route path='/' element={<HomePage isAuth={isAuth} setIsAuth={setIsAuth} cards={cards} setCards={setCards} />}>
             <Route path='/card/:id' element={<CurrentCard />} />
             <Route path='/exit' element={<ExitPage setIsAuth={setIsAuth} />} />
             <Route path='/newcard' element={<NewCard cards={cards} setCards={setCards} />} />

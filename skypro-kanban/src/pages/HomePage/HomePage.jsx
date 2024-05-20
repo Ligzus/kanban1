@@ -3,13 +3,22 @@ import Main from '../../components/Main/Main.jsx'
 import { useEffect, useState } from "react";
 import { Loader } from '../../lib/Loader.styled.js'
 import { Outlet } from 'react-router-dom'
+import { getTodos } from '../../api.js';
 
 function HomePage({ cards, setCards }) {
 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // const fetchTasks = async() => {
+        //     const response = await getTodos({
+        //         token: user.token,
+        //     })
+        //     console.log("todos: ", response);
+        // }
+        // fetchTasks();
         setTimeout(() => setIsLoading(false), 500)
+        
     }, []);
 
     return ( 
