@@ -1,8 +1,8 @@
 import PopExit from "../../components/PopUps/PopExit/PopExit"
 
-function ExitPage({ setLogin }) {
+function ExitPage({ setIsAuth }) {
     function logOut() {
-        setLogin(false);
+        setIsAuth(false);
     };
 
     return <PopExit logOut={logOut}/>    

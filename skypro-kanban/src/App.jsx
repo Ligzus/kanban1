@@ -27,13 +27,13 @@ function App() {
         <Route element={<PrivateRoute isAuth={isAuth} />} >
           <Route path='/' element={<HomePage cards={cards} setCards={setCards} />}>
             <Route path='/card/:id' element={<CurrentCard />} />
-            <Route path='/exit' element={<ExitPage setLogin={setIsAuth} />} />
+            <Route path='/exit' element={<ExitPage setIsAuth={setIsAuth} />} />
             <Route path='/newcard' element={<NewCard cards={cards} setCards={setCards} />} />
           </Route>
         </Route>
 
-        <Route path='/login' element={<LoginPage login={setIsAuth} />} />
-        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage setIsAuth={setIsAuth} />} />
+        <Route path='/register' element={<RegisterPage setIsAuth={setIsAuth} />} />
 
         <Route path="*" element={<NotFoundPage />} />
                 
