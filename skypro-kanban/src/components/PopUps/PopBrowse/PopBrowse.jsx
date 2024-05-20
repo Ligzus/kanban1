@@ -1,7 +1,7 @@
 import Calendar from "../../Calendar/Calendar";
 import { Link } from "react-router-dom";
 
-const PopBrowse = ({ id }) => {
+const PopBrowse = ({_id}) => {
     return (
         <div className="pop-browse" id="popBrowse">
             <div className="pop-browse__container">
@@ -9,7 +9,7 @@ const PopBrowse = ({ id }) => {
                 <div className="pop-browse__content">
                     <div className="pop-browse__top-block">
                     <h3 className="pop-browse__ttl">Название задачи {id}</h3>
-                    <div className="categories__theme theme-top _orange _active-category">
+                    <div className="categories__theme theme-top _orange _active-topic">
                         <p className="_orange">Web Design</p>
                     </div>
                     </div>
@@ -47,7 +47,7 @@ const PopBrowse = ({ id }) => {
                     </div>
                     <div className="theme-down__categories theme-down">
                     <p className="categories__p subttl">Категория</p>
-                    <div className="categories__theme _orange _active-category">
+                    <div className="categories__theme _orange _active-topic">
                         <p className="_orange">Web Design</p>
                     </div>
                     </div>

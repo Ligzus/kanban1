@@ -37,7 +37,7 @@ const PopNewCard = ({ addCard, cards, setCards }) => {
             <div className="pop-new-card__categories categories">
               <p className="categories__p subttl">Категория</p>
               <div className="categories__themes">
-                <div className="categories__theme _orange _active-category">
+                <div className="categories__theme _orange _active-topic">
                   <p className="_orange">Web Design</p>
                 </div>
                 <div className="categories__theme _green">

@@ -14,7 +14,7 @@ const Column = ({ title, cardList }) => {
               <Card 
                 key={card.id}
                 id={card.id}
-                category={card.category} 
+                topic={card.topic} 
                 title={card.title}
                 date={new Date().toLocaleDateString()}
                 status={card.status}
