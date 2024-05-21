@@ -9,7 +9,7 @@ export async function getTodos({ token }) {
         }
     });
 
-    if (response.status === 200) {
+    if (response.status === !200) {
         throw new Error('Ошибка');
     }
 

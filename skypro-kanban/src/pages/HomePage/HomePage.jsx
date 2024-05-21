@@ -5,21 +5,25 @@ import { Loader } from '../../lib/Loader.styled.js'
 import { Outlet } from 'react-router-dom'
 import { getTodos } from '../../api.js';
 
-function HomePage({ cards, setCards }) {
-
+function HomePage({ token, cards, setCards }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // const fetchTasks = async() => {
-        //     const response = await getTodos({
-        //         token: user.token,
-        //     })
-        //     console.log("todos: ", response);
-        // }
-        // fetchTasks();
-        setTimeout(() => setIsLoading(false), 500)
-        
-    }, []);
+        const fetchTasks = async () => {
+            try {
+                const response = await getTodos({ token });
+                setCards(response.tasks); 
+                console.log(response);
+            } catch (error) {
+                alert('Что-то пошло не так. Попробуйте снова.')
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchTasks(); 
+    }, [token, setCards]); 
+
 
     return ( 
 

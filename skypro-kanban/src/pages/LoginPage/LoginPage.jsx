@@ -3,11 +3,8 @@ import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, Mod
 import { useNavigate } from 'react-router-dom';
 import { login } from "../../api";
 
-function LoginPage({ setIsAuth }) {
+function LoginPage({ setIsAuth, setToken }) {
     let navigate = useNavigate();
-    function goToReg() {
-        navigate('/register');
-    };
 
     const [formValues, setFormValues] = useState({
         login: '',
@@ -27,8 +24,9 @@ function LoginPage({ setIsAuth }) {
             password: formValues.password,
         });       
 
-        if (response.user) {
+        if (response?.user) {
             setIsAuth(true);
+            setToken(response.user.token);
             console.log(response.user);
             navigate('/');
         }         
@@ -68,7 +66,7 @@ function LoginPage({ setIsAuth }) {
 
                             <ModalFormGroup>
                                 <ModalFormGroupText>Нужно зарегистрироваться?</ModalFormGroupText>
-                                <ModalFormGroupLink onClick={goToReg}>Регистрируйтесь здесь</ModalFormGroupLink>
+                                <ModalFormGroupLink onClick={() => navigate('/register')}>Регистрируйтесь здесь</ModalFormGroupLink>
                             </ModalFormGroup>
 
                         </ModalFormLogin>

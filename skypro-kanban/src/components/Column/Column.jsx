@@ -1,27 +1,34 @@
 import Card from "../Card/Card";
 import { Cards, ColumnTitle, ColumnTitleText, MainColumn } from "./Column.styled";
+import { format } from 'date-fns'
 
 const Column = ({ title, cardList }) => {
-    return (
-        <MainColumn>
+  return (
+      <MainColumn>
 
-          <ColumnTitle>
-            <ColumnTitleText>{title}</ColumnTitleText>
-          </ColumnTitle> 
+        <ColumnTitle>
+          <ColumnTitleText>{title}</ColumnTitleText>
+        </ColumnTitle> 
 
-          <Cards>
-            {cardList.map((card) => (
+        <Cards>
+          {cardList.map((card) => {
+            const formattedDate = format(new Date(card.date), 'dd.MM.yyyy');
+
+            return (
               <Card 
-                key={card.id}
-                id={card.id}
+                key={card._id}
+                id={card.userId}
                 topic={card.topic} 
                 title={card.title}
-                date={new Date().toLocaleDateString()}
+                date={formattedDate}
+                description={card.description}
                 status={card.status}
-              />))}   
-          </Cards>             
-         
-        </MainColumn>
+              />
+            )})
+          }   
+        </Cards>             
+        
+      </MainColumn>
     )
 }
 
