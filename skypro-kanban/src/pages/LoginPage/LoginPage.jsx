@@ -27,7 +27,6 @@ function LoginPage({ setIsAuth, setToken }) {
         if (response?.user) {
             setIsAuth(true);
             setToken(response.user.token);
-            console.log(response.user);
             navigate('/');
         }         
     }

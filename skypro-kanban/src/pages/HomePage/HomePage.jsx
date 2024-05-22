@@ -12,8 +12,7 @@ function HomePage({ token, cards, setCards }) {
         const fetchTasks = async () => {
             try {
                 const response = await getTodos({ token });
-                setCards(response.tasks); 
-                console.log(response);
+                setCards(response.tasks);
             } catch (error) {
                 alert('Что-то пошло не так. Попробуйте снова.')
             } finally {
