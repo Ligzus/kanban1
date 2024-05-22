@@ -30,11 +30,11 @@ function RegisterPage({ setToken }) {
                 password: formValues.password,
             });       
     
-            if (response.ok) {
-                const data = await response.json();
-                setToken(data.user.token);
-                navigate('/');
-            } else if (response.status === 400) {
+            const data = await response.json();
+            setToken(data.user.token);
+            navigate('/');
+            
+            if (response.status === 400) {
                 throw new Error('Пользователь уже существует');                                             
             } else {
                 throw new Error('Ошибка при входе');
