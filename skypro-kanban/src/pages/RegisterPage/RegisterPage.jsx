@@ -3,7 +3,7 @@ import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, Mod
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api";
 
-function RegisterPage({ setIsAuth }) {
+function RegisterPage({ setToken }) {
     let navigate = useNavigate();
     function goToLogin() {
         navigate('/login');
@@ -32,8 +32,7 @@ function RegisterPage({ setIsAuth }) {
     
             if (response.ok) {
                 const data = await response.json();
-                setIsAuth(true);
-                console.log(data.user);
+                setToken(data.user.token);
                 navigate('/');
             } else if (response.status === 400) {
                 throw new Error('Пользователь уже существует');                                             
@@ -46,10 +45,9 @@ function RegisterPage({ setIsAuth }) {
                 alert('Кажется у вас уже есть аккаунт, войдите в него');   
                 navigate('/login');     
             } else {
-                alert(error.message);
+                console.log(error.message);
             }
         }
-
                
     }
 
