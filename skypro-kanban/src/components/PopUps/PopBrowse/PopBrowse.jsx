@@ -1,14 +1,14 @@
 import Calendar from "../../Calendar/Calendar";
 import { Link } from "react-router-dom";
 
-const PopBrowse = ({_id}) => {
+const PopBrowse = ({id}) => {
     return (
         <div className="pop-browse" id="popBrowse">
             <div className="pop-browse__container">
                 <div className="pop-browse__block">
                 <div className="pop-browse__content">
                     <div className="pop-browse__top-block">
-                    <h3 className="pop-browse__ttl">Название задачи {_id}</h3>
+                    <h3 className="pop-browse__ttl">Название задачи {id}</h3>
                     <div className="categories__theme theme-top _orange _active-topic">
                         <p className="_orange">Web Design</p>
                     </div>

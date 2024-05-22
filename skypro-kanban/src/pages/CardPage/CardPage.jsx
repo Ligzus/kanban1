@@ -3,9 +3,9 @@ import PopBrowse from '../../components/PopUps/PopBrowse/PopBrowse';
 
 
 function CurrentCard() {
-    let {_id} = useParams();
+    let {id} = useParams();
 
-    return <PopBrowse id={_id} />;
+    return <PopBrowse id={id} />;
 }
 
 export default CurrentCard;
