@@ -3,7 +3,7 @@ import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, Mod
 import { useNavigate } from 'react-router-dom';
 import { login } from "../../api";
 
-function LoginPage({ setIsAuth, setToken }) {
+function LoginPage({ setToken }) {
     let navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
@@ -25,7 +25,6 @@ function LoginPage({ setIsAuth, setToken }) {
         });       
 
         if (response?.user) {
-            setIsAuth(true);
             setToken(response.user.token);
             navigate('/');
         }         
