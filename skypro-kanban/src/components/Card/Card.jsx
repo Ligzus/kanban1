@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { getTopicColor } from "../../data";
-import { CardContent, CardDate, CardDateText, CardTopic, CardsCard, CardsGroup, CardsItem, TopicText } from "./Card.styled";
+import { CardBtn, CardBtnDiv, CardContent, CardDate, CardDateText, CardTitle, CardTopic, CardsCard, CardsGroup, CardsItem, TopicText } from "./Card.styled";
 
 
 const Card = ({topic, title, date, id}) => {
@@ -13,16 +13,16 @@ const Card = ({topic, title, date, id}) => {
                         <TopicText>{topic}</TopicText>
                     </CardTopic>
                     <Link to={`/card/${id}`}>
-                        <div className="card__btn">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>    
+                        <CardBtn>
+                            <CardBtnDiv />
+                            <CardBtnDiv />
+                            <CardBtnDiv />
+                        </CardBtn> 
                     </Link>
                 </CardsGroup>
                 <CardContent>
                     <Link to={`/card/${id}`}>
-                        <h3 className="card__title">{title}</h3>
+                        <CardTitle>{title}</CardTitle>
                     </Link>
                     <CardDate>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
