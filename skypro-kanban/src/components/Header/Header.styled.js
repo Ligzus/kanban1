@@ -185,3 +185,64 @@ export const PopUserTheme = styled.div`
     left: 12px;
   }
 `;
+
+
+export const UserPopup = styled.div`
+  display: none;
+  position: absolute;
+  top: 61px;
+  right: 0;
+  width: 213px;
+  height: 205px;
+  border-radius: 10px;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  background: #FFF;
+  box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
+  padding: 34px;
+  text-align: center;
+  z-index: 2;
+
+  &.visible {
+    display: block;
+  }
+`;
+
+export const UserName = styled.p`
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: -0.14px;
+  margin-bottom: 4px;
+`;
+
+export const UserEmail = styled.p`
+  color: #94A6BE;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.14px;
+  margin-bottom: 10px;
+`;
+
+export const LogoutButton = styled.button`
+  width: 72px;
+  height: 30px;
+  background: transparent;
+  color: #565EEF;
+  border-radius: 4px;
+  border: 1px solid #565EEF;
+
+  &:hover {
+    background-color: #33399b;
+    color: #FFFFFF;
+
+    a {
+      color: #FFFFFF;
+    }
+  }
+
+  a {
+    color: #565EEF;
+    text-decoration: none;
+  }
+`;

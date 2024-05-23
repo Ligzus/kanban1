@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import * as S from '../Header/Header.styled'
-import { Container } from '../Header/Header.styled';
+import * as S from './Header.styled';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -10,36 +9,39 @@ const Header = () => {
     setModalVisible(prevModalVisible => !prevModalVisible);
   };
 
-  return ( 
+  return (
     <S.Header>
-      <Container>
+      <S.Container>
         <S.Block>
           <div className="header__logo _show _light">
             <a href="" target="_self">
               <S.HeaderLogo src="images/logo.png" alt="logo" />
             </a>
           </div>
+
           <div className="header__logo _dark">
             <a href="" target="_self">
               <S.HeaderLogo src="images/logo_dark.png" alt="logo" />
             </a>
           </div>
-          <S.Nav>  
-              <S.CreateTaskBtn id="btnMainNew">
-                <Link to={'/newcard'}>Создать новую задачу</Link> 
-              </S.CreateTaskBtn>     
-              <S.UserLink href="#user-set-target" onClick={toggleModal}>Ivan Ivanov</S.UserLink>
+          <S.Nav>
+            <S.CreateTaskBtn id="btnMainNew">
+              <Link to={'/newcard'}>Создать новую задачу</Link>
+            </S.CreateTaskBtn>
 
-              <S.PopUserSet id="user-set-target" $visible={modalVisible}>
-                <S.PopUserName>Ivan Ivanov</S.PopUserName>
-                  <S.PopUserMail>ivan.ivanov@gmail.com</S.PopUserMail>
-                  <S.HoverButton type="button">
-                    <Link to="/exit">Выйти</Link>
-                  </S.HoverButton>
-              </S.PopUserSet>
-          </S.Nav>  			
+            <S.UserLink href="#user-set-target" className="header__user _hover02" onClick={toggleModal}>Ivan Ivanov</S.UserLink>
+
+            <S.UserPopup id="user-set-target" className={modalVisible ? 'visible' : ''}>
+              <S.UserName>Ivan Ivanov</S.UserName>
+              <S.UserEmail>ivan.ivanov@gmail.com</S.UserEmail>
+
+              <S.LogoutButton type="button" className="_hover03">
+                <Link to={'/exit'}>Выйти</Link>
+              </S.LogoutButton>
+            </S.UserPopup>
+          </S.Nav>
         </S.Block>
-        </Container>
+      </S.Container>
     </S.Header>
   );
 };
