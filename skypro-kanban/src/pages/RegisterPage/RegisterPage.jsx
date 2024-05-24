@@ -36,8 +36,6 @@ function RegisterPage({ setToken }) {
             
             if (response.status === 400) {
                 throw new Error('Пользователь уже существует');                                             
-            } else {
-                throw new Error('Ошибка при входе');
             }
             
         } catch (error) {
