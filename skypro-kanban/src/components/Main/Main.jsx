@@ -1,28 +1,25 @@
 import { statusList } from "../../data";
 import Column from "../Column/Column";
+import { MainBlock, MainContainer, MainContent, MainDiv } from "./Main.styled";
 
 const Main = ({ cards }) => {
   
 
   return (
-      <main className="main">
-        <div className="container">
-        
-          <div className="main__block">
-            <div className="main__content">
-
-              {statusList.map((status) => (
-                <Column
-                  key={status}
-                  title={status}
-                  cardList={cards.filter((card) => card.status === status)}
-                />               
-              ))}
-          
-            </div>
-          </div>
-        </div>
-      </main>
+    <MainDiv>
+      <MainContainer>
+        <MainBlock>
+          <MainContent>{statusList.map((status) => (
+            <Column
+              key={status}
+              title={status}
+              cardList={cards.filter((card) => card.status === status)}
+            />               
+            ))}
+          </MainContent>
+        </MainBlock>
+      </MainContainer>
+    </MainDiv>
   );
 };
 

@@ -1,23 +1,33 @@
+import { useState } from "react";
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormLogin, ModalTtl, Wrapper, ModalFormGroupLink } from "./Login.styled";
 import { useNavigate } from 'react-router-dom';
+import { login } from "../../api";
 
-function Login({ login }) {
-
+function LoginPage({ setToken }) {
     let navigate = useNavigate();
 
-    function goToReg() {
-        navigate('/register');
+    const [formValues, setFormValues] = useState({
+        login: '',
+        password: '',
+    });   
+    
+    const onInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormValues({ ...formValues, [name]: value });
     }
+   
+    const onLogin = async (event) => {
+        event.preventDefault();
 
-    function onLogin() {
-        login(true);
-        navigate('/');
-    }
+        const response = await login({
+            login: formValues.login,
+            password: formValues.password,
+        });       
 
-    function handleKeyPress(event) {
-        if (event.key === 'Enter') {
-            onLogin();
-        }
+        if (response?.user) {
+            setToken(response.user.token);
+            navigate('/');
+        }         
     }
     
     return (        
@@ -28,18 +38,33 @@ function Login({ login }) {
                         <div className="modal__ttl">
                             <ModalTtl>Вход</ModalTtl>
                         </div>
-                        <ModalFormLogin id="formLogIn" action="#" onKeyDown={handleKeyPress}>
+                        <ModalFormLogin id="formLogIn" action="#" onSubmit={onLogin}>
+                            <LoginInput 
+                                type="text" 
+                                name="login" 
+                                id="formlogin" 
+                                placeholder="Эл. почта"
+                                value={formValues.login}
+                                onChange={onInputChange}
+                            />
 
-                            <LoginInput type="text" name="login" id="formlogin" placeholder="Эл. почта"></LoginInput>
-                            <LoginInputPassword type="password" name="password" id="formpassword" placeholder="Пароль"></LoginInputPassword>                     
+                            <LoginInputPassword 
+                                type="password" 
+                                name="password" 
+                                id="formpassword" 
+                                placeholder="Пароль"
+                                value={formValues.password}
+                                onChange={onInputChange}
+                            />                
 
-                            <ModalBtnEnter id="btnEnter">
-                                <ModalBtnEnterLink onClick={onLogin}>Войти</ModalBtnEnterLink>
+
+                            <ModalBtnEnter id="btnEnter" type="submit">
+                                <ModalBtnEnterLink>Войти</ModalBtnEnterLink>
                             </ModalBtnEnter>                      
 
                             <ModalFormGroup>
                                 <ModalFormGroupText>Нужно зарегистрироваться?</ModalFormGroupText>
-                                <ModalFormGroupLink onClick={goToReg}>Регистрируйтесь здесь</ModalFormGroupLink>
+                                <ModalFormGroupLink onClick={() => navigate('/register')}>Регистрируйтесь здесь</ModalFormGroupLink>
                             </ModalFormGroup>
 
                         </ModalFormLogin>
@@ -50,4 +75,4 @@ function Login({ login }) {
     )
 };
 
-export default Login;
+export default LoginPage;

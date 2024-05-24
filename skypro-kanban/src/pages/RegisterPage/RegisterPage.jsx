@@ -1,11 +1,52 @@
+import { useState } from "react";
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormGroupLink, ModalFormLogin, ModalTtl, Wrapper } from "../LoginPage/Login.styled";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../api";
 
-function Register() {
+function RegisterPage({ setToken }) {
     let navigate = useNavigate();
-
     function goToLogin() {
         navigate('/login');
+    }
+
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        login: '',
+        password: '',
+    });   
+    
+    const onInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormValues({ ...formValues, [name]: value });
+    }
+   
+    const onRegister = async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await register({
+                name: formValues.firstName,
+                login: formValues.login,
+                password: formValues.password,
+            });       
+    
+            const data = await response.json();
+            setToken(data.user.token);
+            navigate('/');
+            
+            if (response.status === 400) {
+                throw new Error('Пользователь уже существует');                                             
+            }
+            
+        } catch (error) {
+            if (error.message === 'Пользователь уже существует') {
+                alert('Кажется у вас уже есть аккаунт, войдите в него');   
+                navigate('/login');     
+            } else {
+                console.log(error.message);
+            }
+        }
+               
     }
 
     return (
@@ -16,13 +57,36 @@ function Register() {
                         <div className="modal__ttl">
                             <ModalTtl>Регистрация</ModalTtl>
                         </div>
-                        <ModalFormLogin id="formLogUp" action="#">
+                        <ModalFormLogin id="formLogUp" action="#" onSubmit={onRegister}>
 
-							<LoginInput type="text" name="first-name" id="first-name" placeholder="Имя"></LoginInput>
-                            <LoginInput type="text" name="login" id="loginReg" placeholder="Эл. почта"></LoginInput>
-                            <LoginInputPassword type="password" name="password" id="passwordFirst" placeholder="Пароль"></LoginInputPassword>                     
+							<LoginInput 
+                                type="text" 
+                                name="firstName" 
+                                id="first-name" 
+                                placeholder="Имя"  
+                                value={formValues.firstName}
+                                onChange={onInputChange}                          
+                            />
 
-                            <ModalBtnEnter id="SignUpEnter">
+                            <LoginInput 
+                                type="email" 
+                                name="login" 
+                                id="loginReg" 
+                                placeholder="Эл. почта"
+                                value={formValues.login}
+                                onChange={onInputChange}
+                            />
+
+                            <LoginInputPassword 
+                                type="password" 
+                                name="password" 
+                                id="passwordFirst" 
+                                placeholder="Пароль"
+                                value={formValues.password}
+                                onChange={onInputChange}
+                            />                   
+
+                            <ModalBtnEnter id="SignUpEnter" type="submit">
                                 <ModalBtnEnterLink>Зарегистрироваться</ModalBtnEnterLink>
                             </ModalBtnEnter>                      
 
@@ -39,4 +103,4 @@ function Register() {
     )
 };
 
-export default Register
+export default RegisterPage;

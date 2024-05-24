@@ -5,24 +5,20 @@ import { statusList } from "../../data";
 function NewCard({ cards, setCards }) {
 
     let navigate = useNavigate();
-
-    function closeAfterCreate() {
-        navigate('/');
-    }
     
     function addCard() {       
 
         const newCard = {            
-            id: cards.length + 1,
-            category: cards[cards.length - 1].category || "Без кактегории", 
+            _id: cards.length + 1,
+            topic: "Без кактегории", 
             title: "Самая новая задача", 
+            description: "Описание новой задачи",
             date: new Date().toLocaleDateString(), 
             status: statusList[0],
         }
     
         setCards([...cards, newCard]);        
-
-        closeAfterCreate();
+        navigate('/');
     }
 
     return <PopNewCard addCard={addCard} cards={cards} setCards={setCards} />

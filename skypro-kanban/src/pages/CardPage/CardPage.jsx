@@ -3,7 +3,7 @@ import PopBrowse from '../../components/PopUps/PopBrowse/PopBrowse';
 
 
 function CurrentCard() {
-    let { id } = useParams();
+    let {id} = useParams();
 
     return <PopBrowse id={id} />;
 }
