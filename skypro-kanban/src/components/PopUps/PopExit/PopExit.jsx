@@ -11,11 +11,9 @@ import {
   PopExitButtonNo
 } from './PopExit.styled';
 
-const PopExit = ({ logOut }) => {
+const PopExit = () => {
 
-  function handleSubmit() {
-    logOut();
-  }
+  const {logoutUser} = useUser();
 
   return (
     <PopExitWrapper id="popExit">
@@ -27,7 +25,7 @@ const PopExit = ({ logOut }) => {
           <PopExitForm id="formExit" action="#">
             <PopExitFormGroup>
               <PopExitButtonYes>
-                <a onClick={handleSubmit}>Да, выйти</a>
+                <a onClick={logoutUser}>Да, выйти</a>
               </PopExitButtonYes>
               <PopExitButtonNo>
                 <Link to={'/'}>Нет, остаться</Link>

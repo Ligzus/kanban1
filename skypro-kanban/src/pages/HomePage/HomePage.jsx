@@ -1,44 +1,44 @@
-import Header from '../../components/Header/Header.jsx'
-import Main from '../../components/Main/Main.jsx'
-import { useEffect, useState } from "react";
-import { Loader } from '../../lib/Loader.styled.js'
-import { Outlet } from 'react-router-dom'
+import { useContext, useEffect, useState } from "react";
+import { Outlet } from 'react-router-dom';
+import Header from '../../components/Header/Header.jsx';
+import Main from '../../components/Main/Main.jsx';
+import { Loader } from '../../lib/Loader.styled.js';
 import { getTodos } from '../../api.js';
+import { UserContext } from '../../comtexts/user.jsx';
+import { useTasks } from '../../hooks/useTasks.jsx';
 
-function HomePage({ token, cards, setCards }) {
+function HomePage() {
+    const { user } = useContext(UserContext); // Получаем пользователя из контекста
     const [isLoading, setIsLoading] = useState(true);
+    const { tasks, setTasks } = useTasks(); // Используем хук useTasks
 
     useEffect(() => {
         const fetchTasks = async () => {
-            try {
-                const response = await getTodos({ token });
-                setCards(response.tasks);
-            } catch (error) {
-                alert('Что-то пошло не так. Попробуйте снова.')
-            } finally {
+            if (user && user.token) { // Проверяем наличие токена
+                try {
+                    const response = await getTodos({ token: user.token });
+                    setTasks(response.tasks);
+                } catch (error) {
+                    alert('Что-то пошло не так. Попробуйте снова.');
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                alert('Пользователь не авторизован.');
                 setIsLoading(false);
             }
         };
 
-        fetchTasks(); 
-    }, [token, setCards]); 
+        fetchTasks();
+    }, [user]);
 
-
-    return ( 
-
+    return (
         <div className="wrapper">
-
-            {/* Компонент Header */}
             <Header />
-
-            {/* Компонент Main с прелоадером */}
-            {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={cards} />}  
-
-            <Outlet cards={cards} setCards={setCards} />
-            
+            {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={tasks} />}
+            <Outlet />
         </div>
-
-    )
+    );
 };
 
 export default HomePage;

@@ -1,7 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useUser } from "./hooks/useUser";
 
-function PrivateRoute({ token }) {
-    return token? <Outlet /> : <Navigate to={'/login'} />
+function PrivateRoute() {
+
+    const {user} = useUser();    
+    return user? <Outlet /> : <Navigate to={'/login'} />
 }
 
 export default PrivateRoute;

@@ -1,9 +1,10 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Outlet } from 'react-router-dom'
 
 export const TasksContext = createContext(null);
 
-export const TaskProvider = ({ children }) => {
+export const TaskProvider = () => {
   let navigate = useNavigate();
 
   const [tasks, setTasks] = useState([]);
@@ -15,7 +16,7 @@ export const TaskProvider = ({ children }) => {
 
   return (
     <TasksContext.Provider value={{ tasks, setTasks, getTasks }}>
-      {children}
+      <Outlet />
     </TasksContext.Provider>
   );
 };
