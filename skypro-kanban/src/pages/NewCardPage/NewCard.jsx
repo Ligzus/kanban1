@@ -13,7 +13,7 @@ function NewCard({ cards, setCards }) {
             topic: "Без кактегории", 
             title: "Самая новая задача", 
             description: "Описание новой задачи",
-            date: new Date().toLocaleDateString(), 
+            date: new Date(), 
             status: statusList[0],
         }
     
