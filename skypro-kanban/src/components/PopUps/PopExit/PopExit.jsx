@@ -11,6 +11,8 @@ import {
   PopExitButtonNo
 } from './PopExit.styled';
 
+import { useUser } from '../../../hooks/useUser';
+
 const PopExit = () => {
 
   const {logoutUser} = useUser();
