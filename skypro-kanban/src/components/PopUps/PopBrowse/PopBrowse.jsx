@@ -30,15 +30,19 @@ import {
   Descrbtion,
   BtnGroup
 } from './PopBrowse.styled';
+import { useTasks } from '../../../hooks/useTasks';
 
 const PopBrowse = ({ id }) => {
+
+  const { tasks } = useTasks();
+
   return (
     <PopBrowseWrapper id="popBrowse">
       <PopBrowseContainer>
         <PopBrowseBlock>
           <PopBrowseContent>
             <PopBrowseTopBlock>
-              <PopBrowseTitle>Название задачи {id}</PopBrowseTitle>
+              <PopBrowseTitle>{id}</PopBrowseTitle>
               <CategoriesThemeTop>
                 <p>Web Design</p>
               </CategoriesThemeTop>

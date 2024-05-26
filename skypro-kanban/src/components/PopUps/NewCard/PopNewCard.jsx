@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Calendar from '../../Calendar/Calendar';
 import { PopNewCardClose, PopNewCardContainer, PopNewCardBlock, PopNewCardContent, PopNewCardTitle, PopNewCardWrap, PopNewCardForm, FormNewBlock, FormNewInput, FormNewArea, CalendarContainer, CalendarTitle, Categories, CategoryTitle, CategoriesThemes, CategoryTheme, FormNewCreateButton, PopNewCards, SubTtl } from './PopNewCard.styled';
 import { useTasks } from '../../../hooks/useTasks';
-import { postTodo } from '../../../api'; // Импортируем функцию для отправки данных на сервер
+import { postTodo } from '../../../api';
 import { useUser } from '../../../hooks/useUser';
 
 const PopNewCard = () => {
@@ -16,7 +16,7 @@ const PopNewCard = () => {
     topic: "",
     description: "",
     date: "",
-    status: ""
+    status: "Без статуса"
   });
 
   const handleInputChange = (e) => {
@@ -34,7 +34,15 @@ const PopNewCard = () => {
         date: formData.date,
       };
 
-      const response = await postTodo({user, newTask });
+      const response = await postTodo({ 
+        user, 
+        title: newTask.title, 
+        topic: newTask.topic, 
+        status: newTask.status, 
+        description: newTask.description, 
+        date: newTask.date,
+      });
+
       if (response.ok) {
         const updatedTasks = await response.json();
         setTasks(updatedTasks.tasks); // Обновляем задачи на основе ответа сервера
@@ -44,10 +52,10 @@ const PopNewCard = () => {
         console.error('Ошибка:', response.status, errorText);
       }
     } catch (error) {
-      console.error( error);
+      console.error(error);
     }
   };
-  
+
   const handleCloseBtn = () => {
     navigate('/');
   };
@@ -88,7 +96,7 @@ const PopNewCard = () => {
                 <CalendarTitle>Даты</CalendarTitle>
                 <Calendar 
                   date={formData.date}
-                  onSelect={(date) => setFormData({ ...formData, date: date ? date : "" })}
+                  setSelected={(date) => setFormData({ ...formData, date: date })}
                 />
               </CalendarContainer>
             </PopNewCardWrap>
