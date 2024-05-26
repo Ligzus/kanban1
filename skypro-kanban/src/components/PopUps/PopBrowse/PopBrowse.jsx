@@ -51,6 +51,7 @@ const PopBrowse = ({ id }) => {
   const handleCancelClick = () => {
     setIsEditMode(false);
     setDescription(task.description); // Сбрасываем изменения при отмене
+    setCurrentStatus(task.status)
   };
 
   const handleStatusClick = (status) => {
