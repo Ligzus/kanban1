@@ -85,12 +85,13 @@ export const StatusTheme = styled.div`
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
+  cursor: pointer;
 
-  &.hide {
+  &._hide {
     display: none;
   }
 
-  &.gray {
+  &._gray {
     background: #94A6BE;
     color: #FFFFFF;
   }
@@ -100,7 +101,6 @@ export const StatusThemeText = styled.p`
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
-  color: #ffff;
 `;
 
 export const PopBrowseWrap = styled.div`
@@ -154,6 +154,16 @@ export const TextArea = styled.textarea`
 export const CalendarWrapper = styled.div`
   width: 182px;
   margin-bottom: 20px;
+
+  p {
+    font-size: 10px;
+    padding-left: 15px;
+    color: #94A6BE;
+  }
+
+  p span {
+    color: #000000;
+  }
 `;
 
 export const CalendarTitle = styled.p`
@@ -248,6 +258,20 @@ export const BtnBrowseEdit = styled(Button)`
     margin-right: 8px;
   }
 `;
+
+export const BtnBrowseCancel = styled(Button)`
+  &._btn-bor {
+    margin-left: 8px;
+  }
+`
+
+export const BtnBrowseDel = styled(Button)`
+  &._btn-bor {
+    margin-left: 8px;
+  }
+`
+
+export const BtnBrowseSave = styled(Button)``;
 
 export const BtnBrowseDelete = styled(Button)``;
 

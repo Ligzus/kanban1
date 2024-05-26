@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Calendar from '../../Calendar/Calendar';
 import { Link } from 'react-router-dom';
 import {
@@ -20,25 +20,46 @@ import {
   TextArea,
   CalendarWrapper,
   CalendarTitle,
-  ThemeDownCategories,
-  CategoriesText,
-  CategoriesTheme,
   PopBrowseBtnBrowse,
   BtnBrowseEdit,
   BtnBrowseDelete,
   BtnBrowseClose,
   Descrbtion,
-  BtnGroup
+  BtnGroup,
+  BtnBrowseCancel,
+  BtnBrowseDel,
+  BtnBrowseSave
 } from './PopBrowse.styled';
 import { useTasks } from '../../../hooks/useTasks';
+import { format } from 'date-fns';
 
 const PopBrowse = ({ id }) => {
   const { tasks } = useTasks();
   const task = tasks.find(task => task._id === id);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState(task?.status || "Без статуса");
+  const [description, setDescription] = useState(task?.description || "");
 
   if (!task) {
-    return <p>Задача не найдена</p>;
+    return;
   }
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditMode(false);
+    setDescription(task.description); // Сбрасываем изменения при отмене
+  };
+
+  const handleStatusClick = (status) => {
+    setCurrentStatus(status);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
 
   return (
     <PopBrowseWrapper id="popBrowse">
@@ -48,7 +69,7 @@ const PopBrowse = ({ id }) => {
             <PopBrowseTopBlock>
               <PopBrowseTitle>{task.title}</PopBrowseTitle>
               <CategoriesThemeTop
-               className={`
+                className={`
                 ${task.topic === 'Research' ? '_green' : ''}
                 ${task.topic === 'Web Design' ? '_orange' : ''}
                 ${task.topic === 'Copywriting' ? '_purple' : ''}
@@ -61,21 +82,15 @@ const PopBrowse = ({ id }) => {
             <Status>
               <StatusText className="subttl">Статус</StatusText>
               <StatusThemes>
-                <StatusTheme className={task.status === "Без статуса" ? "_gray" : "_hide"}>
-                  <StatusThemeText>Без статуса</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className={task.status === "Нужно сделать" ? "_gray" : "_hide"}>
-                  <StatusThemeText>Нужно сделать</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className={task.status === "В работе" ? "_gray" : "_hide"}>
-                  <StatusThemeText>В работе</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className={task.status === "Тестирование" ? "_gray" : "_hide"}>
-                  <StatusThemeText>Тестирование</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className={task.status === "Готово" ? "_gray" : "_hide"}>
-                  <StatusThemeText>Готово</StatusThemeText>
-                </StatusTheme>
+                {["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"].map((status) => (
+                  <StatusTheme
+                    key={status}
+                    className={currentStatus === status ? "_gray" : ""}
+                    onClick={() => isEditMode && handleStatusClick(status)}
+                  >
+                    <StatusThemeText>{status}</StatusThemeText>
+                  </StatusTheme>
+                ))}
               </StatusThemes>
             </Status>
             <PopBrowseWrap>
@@ -85,38 +100,33 @@ const PopBrowse = ({ id }) => {
                   <TextArea
                     name="text"
                     id="textArea01"
-                    readOnly
-                    value={task.description}
+                    readOnly={!isEditMode}
+                    value={description}
+                    onChange={handleDescriptionChange}
                   ></TextArea>
                 </FormBrowseBlock>
               </FormBrowse>
               <CalendarWrapper>
                 <CalendarTitle>Даты</CalendarTitle>
-                <Calendar date={task.date} setSelected={() => {}} readOnly />
+                <Calendar date={task.date} setSelected={() => {}} readOnly={!isEditMode} />
+                <p>Срок исполнения: <span>{format(new Date(task.date), 'dd.MM.yyyy')}</span></p>
               </CalendarWrapper>
             </PopBrowseWrap>
-            <ThemeDownCategories>
-              <CategoriesText>Категории</CategoriesText>
-              <CategoriesTheme 
-                  className={`_orange ${task.topic === 'Web Design' ? '_active-topic' : ''}`}
-                >
-                  <p className="_orange">Web Design</p>
-                </CategoriesTheme>
-                <CategoriesTheme 
-                  className={`_green ${task.topic === 'Research' ? '_active-topic' : ''}`}
-                >
-                  <p className="_green">Research</p>
-                </CategoriesTheme>
-                <CategoriesTheme 
-                  className={`_purple ${task.topic === 'Copywriting' ? '_active-topic' : ''}`}
-                >
-                  <p className="_purple">Copywriting</p>
-                </CategoriesTheme>
-            </ThemeDownCategories>
+
             <PopBrowseBtnBrowse>
               <BtnGroup>
-                <BtnBrowseEdit className="_btn-bor _hover03">Редактировать</BtnBrowseEdit>
-                <BtnBrowseDelete className="_btn-bg _hover01">Удалить</BtnBrowseDelete>
+                {isEditMode ? (
+                  <div className='editButtons'>
+                    <BtnBrowseSave className="_btn-bg _hover01">Сохранить</BtnBrowseSave>
+                    <BtnBrowseCancel className="_btn-bor _hover03" onClick={handleCancelClick}>Отменить</BtnBrowseCancel>
+                    <BtnBrowseDel className="_btn-bor _hover03">Удалить задачу</BtnBrowseDel>
+                  </div>
+                ) : (
+                  <div className='mainButtons'>
+                    <BtnBrowseEdit className="_btn-bor _hover03" onClick={handleEditClick}>Редактировать</BtnBrowseEdit>
+                    <BtnBrowseDelete className="_btn-bg _hover01">Удалить</BtnBrowseDelete>
+                  </div>
+                )}
               </BtnGroup>
               <BtnBrowseClose className="_btn-bor _hover03">
                 <Link to="/">Закрыть</Link>
