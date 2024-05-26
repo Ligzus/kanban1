@@ -31,7 +31,6 @@ export const Block = styled.div`
 `;
 
 export const Nav = styled.nav`
-    max-width: 290px;
     padding: 0;
     display: flex;
     align-items: center;
@@ -193,7 +192,7 @@ export const UserPopup = styled.div`
   top: 61px;
   right: 0;
   width: 213px;
-  height: 205px;
+  height: auto;
   border-radius: 10px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   background: #FFF;
