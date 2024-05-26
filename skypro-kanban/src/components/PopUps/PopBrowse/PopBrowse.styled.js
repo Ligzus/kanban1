@@ -56,8 +56,8 @@ export const PopBrowseTitle = styled.h3`
 `;
 
 export const CategoriesThemeTop = styled.div`
-  background-color: #FFE4C2;
-  color: #FF6D00;
+  background-color: '';
+  color: '';
   border-radius: 4px;
   padding: 8px 20px;
   opacity: 1;

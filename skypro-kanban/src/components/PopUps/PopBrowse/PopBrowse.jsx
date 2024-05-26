@@ -33,8 +33,12 @@ import {
 import { useTasks } from '../../../hooks/useTasks';
 
 const PopBrowse = ({ id }) => {
-
   const { tasks } = useTasks();
+  const task = tasks.find(task => task._id === id);
+
+  if (!task) {
+    return <p>Задача не найдена</p>;
+  }
 
   return (
     <PopBrowseWrapper id="popBrowse">
@@ -42,27 +46,34 @@ const PopBrowse = ({ id }) => {
         <PopBrowseBlock>
           <PopBrowseContent>
             <PopBrowseTopBlock>
-              <PopBrowseTitle>{id}</PopBrowseTitle>
-              <CategoriesThemeTop>
-                <p>Web Design</p>
+              <PopBrowseTitle>{task.title}</PopBrowseTitle>
+              <CategoriesThemeTop
+               className={`
+                ${task.topic === 'Research' ? '_green' : ''}
+                ${task.topic === 'Web Design' ? '_orange' : ''}
+                ${task.topic === 'Copywriting' ? '_purple' : ''}
+                ${task.topic === 'Без категории' ? '_gray' : ''}
+              `}
+              >
+                <p>{task.topic}</p>
               </CategoriesThemeTop>
             </PopBrowseTopBlock>
             <Status>
               <StatusText className="subttl">Статус</StatusText>
               <StatusThemes>
-                <StatusTheme className="_hide">
+                <StatusTheme className={task.status === "Без статуса" ? "_gray" : "_hide"}>
                   <StatusThemeText>Без статуса</StatusThemeText>
                 </StatusTheme>
-                <StatusTheme className="_gray">
+                <StatusTheme className={task.status === "Нужно сделать" ? "_gray" : "_hide"}>
                   <StatusThemeText>Нужно сделать</StatusThemeText>
                 </StatusTheme>
-                <StatusTheme className="_hide">
+                <StatusTheme className={task.status === "В работе" ? "_gray" : "_hide"}>
                   <StatusThemeText>В работе</StatusThemeText>
                 </StatusTheme>
-                <StatusTheme className="_hide">
+                <StatusTheme className={task.status === "Тестирование" ? "_gray" : "_hide"}>
                   <StatusThemeText>Тестирование</StatusThemeText>
                 </StatusTheme>
-                <StatusTheme className="_hide">
+                <StatusTheme className={task.status === "Готово" ? "_gray" : "_hide"}>
                   <StatusThemeText>Готово</StatusThemeText>
                 </StatusTheme>
               </StatusThemes>
@@ -70,28 +81,43 @@ const PopBrowse = ({ id }) => {
             <PopBrowseWrap>
               <FormBrowse id="formBrowseCard" action="#">
                 <FormBrowseBlock>
-                    <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
-                  <TextArea name="text" id="textArea01" readOnly placeholder="Введите описание задачи..."></TextArea>
+                  <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
+                  <TextArea
+                    name="text"
+                    id="textArea01"
+                    readOnly
+                    value={task.description}
+                  ></TextArea>
                 </FormBrowseBlock>
               </FormBrowse>
               <CalendarWrapper>
                 <CalendarTitle>Даты</CalendarTitle>
-
-                {/* Компонент Календарь */}
-                <Calendar /> 
-
+                <Calendar date={task.date} setSelected={() => {}} readOnly />
               </CalendarWrapper>
             </PopBrowseWrap>
             <ThemeDownCategories>
               <CategoriesText>Категории</CategoriesText>
-              <CategoriesTheme>Категория 1</CategoriesTheme>
-              <CategoriesTheme>Категория 2</CategoriesTheme>
+              <CategoriesTheme 
+                  className={`_orange ${task.topic === 'Web Design' ? '_active-topic' : ''}`}
+                >
+                  <p className="_orange">Web Design</p>
+                </CategoriesTheme>
+                <CategoriesTheme 
+                  className={`_green ${task.topic === 'Research' ? '_active-topic' : ''}`}
+                >
+                  <p className="_green">Research</p>
+                </CategoriesTheme>
+                <CategoriesTheme 
+                  className={`_purple ${task.topic === 'Copywriting' ? '_active-topic' : ''}`}
+                >
+                  <p className="_purple">Copywriting</p>
+                </CategoriesTheme>
             </ThemeDownCategories>
             <PopBrowseBtnBrowse>
-                <BtnGroup>
-                    <BtnBrowseEdit className="_btn-bor _hover03">Редактировать</BtnBrowseEdit>
-                    <BtnBrowseDelete className="_btn-bg _hover01">Удалить</BtnBrowseDelete>
-                </BtnGroup>
+              <BtnGroup>
+                <BtnBrowseEdit className="_btn-bor _hover03">Редактировать</BtnBrowseEdit>
+                <BtnBrowseDelete className="_btn-bg _hover01">Удалить</BtnBrowseDelete>
+              </BtnGroup>
               <BtnBrowseClose className="_btn-bor _hover03">
                 <Link to="/">Закрыть</Link>
               </BtnBrowseClose>
