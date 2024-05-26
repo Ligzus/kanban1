@@ -83,15 +83,21 @@ const PopBrowse = ({ id }) => {
             <Status>
               <StatusText className="subttl">Статус</StatusText>
               <StatusThemes>
-                {["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"].map((status) => (
-                  <StatusTheme
-                    key={status}
-                    className={currentStatus === status ? "_gray" : ""}
-                    onClick={() => isEditMode && handleStatusClick(status)}
-                  >
-                    <StatusThemeText>{status}</StatusThemeText>
+                {isEditMode ? (
+                  ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"].map((status) => (
+                    <StatusTheme
+                      key={status}
+                      className={currentStatus === status ? "_gray" : ""}
+                      onClick={() => handleStatusClick(status)}
+                    >
+                      <StatusThemeText>{status}</StatusThemeText>
+                    </StatusTheme>
+                  ))
+                ) : (
+                  <StatusTheme className="_gray">
+                    <StatusThemeText>{currentStatus}</StatusThemeText>
                   </StatusTheme>
-                ))}
+                )}
               </StatusThemes>
             </Status>
             <PopBrowseWrap>
