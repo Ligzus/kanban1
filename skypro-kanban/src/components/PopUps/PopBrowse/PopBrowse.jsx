@@ -28,7 +28,9 @@ import {
   BtnGroup,
   BtnBrowseCancel,
   BtnBrowseDel,
-  BtnBrowseSave
+  BtnBrowseSave,
+  EditInput,
+  EditTextArea,
 } from './PopBrowse.styled';
 import { useTasks } from '../../../hooks/useTasks';
 import { format } from 'date-fns';
@@ -36,13 +38,14 @@ import { deleteTodo } from '../../../api';
 import { useUser } from '../../../hooks/useUser';
 
 const PopBrowse = ({ id }) => {
-  const { tasks } = useTasks();
+  const { tasks, setTasks } = useTasks();
   const task = tasks.find(task => task._id === id);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentStatus, setCurrentStatus] = useState(task?.status || "Без статуса");
-  let navigate = useNavigate();
+  const [title, setTitle] = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const navigate = useNavigate();
   const { user } = useUser();
-  const { setTasks } = useTasks();
 
   if (!task) {
     return;
@@ -54,6 +57,8 @@ const PopBrowse = ({ id }) => {
 
   const handleCancelClick = () => {
     setIsEditMode(false);
+    setTitle(task.title);
+    setDescription(task.description);
     setCurrentStatus(task.status); 
   };
 
@@ -61,9 +66,17 @@ const PopBrowse = ({ id }) => {
     setCurrentStatus(status);
   };
 
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
   const handleDeleteClick = async () => {
     try {
-        const updatedTasks = await deleteTodo({
+      const updatedTasks = await deleteTodo({
         id: task._id,
         user
       });
@@ -71,7 +84,6 @@ const PopBrowse = ({ id }) => {
       navigate('/'); 
     } catch (error) {
       console.error('Ошибка при удалении задачи:', error);
-      
     }
   };
 
@@ -81,14 +93,22 @@ const PopBrowse = ({ id }) => {
         <PopBrowseBlock>
           <PopBrowseContent>
             <PopBrowseTopBlock>
-              <PopBrowseTitle>{task.title}</PopBrowseTitle>
+              {isEditMode ? (
+                <EditInput placeholder="Введите незвание задачи..."
+                  type="text"
+                  value={title}
+                  onChange={handleTitleChange}
+                />
+              ) : (
+                <PopBrowseTitle>{task.title}</PopBrowseTitle>
+              )}
               <CategoriesThemeTop
                 className={`
-                ${task.topic === 'Research' ? '_green' : ''}
-                ${task.topic === 'Web Design' ? '_orange' : ''}
-                ${task.topic === 'Copywriting' ? '_purple' : ''}
-                ${task.topic === 'Без категории' ? '_gray' : ''}
-              `}
+                  ${task.topic === 'Research' ? '_green' : ''}
+                  ${task.topic === 'Web Design' ? '_orange' : ''}
+                  ${task.topic === 'Copywriting' ? '_purple' : ''}
+                  ${task.topic === 'Без категории' ? '_gray' : ''}
+                `}
               >
                 <p>{task.topic}</p>
               </CategoriesThemeTop>
@@ -117,13 +137,15 @@ const PopBrowse = ({ id }) => {
               <FormBrowse id="formBrowseCard" action="#">
                 <FormBrowseBlock>
                   <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
-                  <TextArea
-                    name="text"
-                    id="textArea01"
-                    readOnly={!isEditMode}
-                    value={task.description}
-                    onChange={() => {}}
-                  ></TextArea>
+                  {isEditMode ? (
+                    <EditTextArea placeholder="Введите описание задачи..."
+                      type="text"
+                      value={description}
+                      onChange={handleDescriptionChange}
+                    />
+                    ) : (
+                    <TextArea id="textArea01" readOnly value={description}></TextArea>
+                    )}
                 </FormBrowseBlock>
               </FormBrowse>
               <CalendarWrapper>
