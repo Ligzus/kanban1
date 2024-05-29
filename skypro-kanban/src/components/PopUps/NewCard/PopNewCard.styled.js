@@ -162,6 +162,27 @@ export const CategoryTheme = styled.div`
   border-radius: 24px;
   margin-right: 7px;
   opacity: 0.4;
+
+  &._orange {
+  background-color: #FFE4C2;
+  color: #FF6D00;
+  }
+
+  &._green {
+    background-color: #B4FDD1;
+    color: #06B16E;
+  }
+
+  &._purple {
+    background-color: #E9D4FF;
+    color: #9A48F1;
+  }
+
+  &._gray {
+    background: #94A6BE;
+    color: #FFFFFF;
+  }
+  
   &._active-topic {
     opacity: 1 !important;
   }

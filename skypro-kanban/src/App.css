@@ -43,13 +43,13 @@ body {
   color: #000000;
 }
 
-.wrapper {
+/* .wrapper {
   max-width: 100%;
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
   background-color: #F1F1F1;
-}
+} */
 
 .container {
   max-width: 1260px;
@@ -85,7 +85,7 @@ body {
   display: block;
 }
 
-._orange {
+/* ._orange {
   background-color: #FFE4C2;
   color: #FF6D00;
 }
@@ -107,7 +107,7 @@ body {
 
 ._active-category {
   opacity: 1 !important;
-}
+} */
 
 .pop-wrap {
   position: relative;

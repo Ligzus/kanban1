@@ -6,6 +6,7 @@ import { Loader } from '../../lib/Loader.styled.js';
 import { getTodos } from '../../api.js';
 import { UserContext } from '../../comtexts/user.jsx';
 import { useTasks } from '../../hooks/useTasks.jsx';
+import { Wrapper } from "./HomePage.styled.js";
 
 function HomePage() {
     const { user } = useContext(UserContext); // Получаем пользователя из контекста
@@ -33,11 +34,11 @@ function HomePage() {
     }, [user]);
 
     return (
-        <div className="wrapper">
+        <Wrapper>
             <Header />
             {isLoading ? <Loader>Загружаю задачи ...</Loader> : <Main cards={tasks} />}
             <Outlet />
-        </div>
+        </Wrapper>
     );
 };
 

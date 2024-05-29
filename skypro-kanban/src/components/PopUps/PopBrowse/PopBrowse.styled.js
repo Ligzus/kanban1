@@ -81,6 +81,30 @@ export const CategoriesThemeTop = styled.div`
   border-radius: 4px;
   padding: 8px 20px;
   opacity: 1;
+  
+  &._orange {
+  background-color: #FFE4C2;
+  color: #FF6D00;
+  }
+
+  &._green {
+    background-color: #B4FDD1;
+    color: #06B16E;
+  }
+
+  &._purple {
+    background-color: #E9D4FF;
+    color: #9A48F1;
+  }
+
+  &._gray {
+    background: #94A6BE;
+    color: #FFFFFF;
+  }
+
+  &._active-category {
+    opacity: 1 !important;
+  }
 `;
 
 export const Status = styled.div`
