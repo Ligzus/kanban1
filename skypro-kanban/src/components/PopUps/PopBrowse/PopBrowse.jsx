@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from '../../Calendar/Calendar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   PopBrowseWrapper,
   PopBrowseContainer,
@@ -32,13 +32,17 @@ import {
 } from './PopBrowse.styled';
 import { useTasks } from '../../../hooks/useTasks';
 import { format } from 'date-fns';
+import { deleteTodo } from '../../../api';
+import { useUser } from '../../../hooks/useUser';
 
 const PopBrowse = ({ id }) => {
   const { tasks } = useTasks();
   const task = tasks.find(task => task._id === id);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentStatus, setCurrentStatus] = useState(task?.status || "Без статуса");
-  const [description, setDescription] = useState(task?.description || "");
+  let navigate = useNavigate();
+  const { user } = useUser();
+  const { setTasks } = useTasks();
 
   if (!task) {
     return;
@@ -50,16 +54,25 @@ const PopBrowse = ({ id }) => {
 
   const handleCancelClick = () => {
     setIsEditMode(false);
-    setDescription(task.description); // Сбрасываем изменения при отмене
-    setCurrentStatus(task.status)
+    setCurrentStatus(task.status); 
   };
 
   const handleStatusClick = (status) => {
     setCurrentStatus(status);
   };
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+  const handleDeleteClick = async () => {
+    try {
+        const updatedTasks = await deleteTodo({
+        id: task._id,
+        user
+      });
+      setTasks(updatedTasks.tasks);
+      navigate('/'); 
+    } catch (error) {
+      console.error('Ошибка при удалении задачи:', error);
+      
+    }
   };
 
   return (
@@ -108,8 +121,8 @@ const PopBrowse = ({ id }) => {
                     name="text"
                     id="textArea01"
                     readOnly={!isEditMode}
-                    value={description}
-                    onChange={handleDescriptionChange}
+                    value={task.description}
+                    onChange={() => {}}
                   ></TextArea>
                 </FormBrowseBlock>
               </FormBrowse>
@@ -126,12 +139,12 @@ const PopBrowse = ({ id }) => {
                   <div className='editButtons'>
                     <BtnBrowseSave className="_btn-bg _hover01">Сохранить</BtnBrowseSave>
                     <BtnBrowseCancel className="_btn-bor _hover03" onClick={handleCancelClick}>Отменить</BtnBrowseCancel>
-                    <BtnBrowseDel className="_btn-bor _hover03">Удалить задачу</BtnBrowseDel>
+                    <BtnBrowseDel className="_btn-bor _hover03" onClick={handleDeleteClick}>Удалить задачу</BtnBrowseDel>
                   </div>
                 ) : (
                   <div className='mainButtons'>
                     <BtnBrowseEdit className="_btn-bor _hover03" onClick={handleEditClick}>Редактировать</BtnBrowseEdit>
-                    <BtnBrowseDelete className="_btn-bg _hover01">Удалить</BtnBrowseDelete>
+                    <BtnBrowseDelete className="_btn-bg _hover01" onClick={handleDeleteClick}>Удалить</BtnBrowseDelete>
                   </div>
                 )}
               </BtnGroup>

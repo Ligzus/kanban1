@@ -34,7 +34,48 @@ export async function postTodo({ user, title, topic, status, description, date }
         date: date,
       })
     });
-  }
+}
+
+// Изменить задачу:
+export async function editTodo({ id, user, title, topic, status, description, date }) {
+    const response = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`,
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+            title: title,
+            topic: topic,
+            status: status,
+            description: description,
+            date: date,
+        })
+    });
+
+    if (response.status === !201) {
+        throw new Error('Ошибка');
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+// Удалить задачу:
+export async function deleteTodo({ id, user }) {
+    const response = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`,
+        },
+        method: 'DELETE',
+    });
+
+    if (response.status === !201) {
+        throw new Error('Ошибка');
+    }
+
+    const data = await response.json();
+    return data;
+}
 
 
 // Зарегистрироваться:

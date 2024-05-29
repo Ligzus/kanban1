@@ -45,7 +45,7 @@ const PopNewCard = () => {
 
       if (response.ok) {
         const updatedTasks = await response.json();
-        setTasks(updatedTasks.tasks); // Обновляем задачи на основе ответа сервера
+        setTasks(updatedTasks.tasks);
         navigate('/');
       } else {
         const errorText = await response.text();
