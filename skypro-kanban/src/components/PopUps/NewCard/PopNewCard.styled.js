@@ -154,6 +154,7 @@ export const CategoryTitle = styled.p`
 `;
 
 export const CategoryTheme = styled.div`
+  cursor: pointer;
   display: inline-block;
   width: auto;
   height: 30px;
@@ -161,7 +162,7 @@ export const CategoryTheme = styled.div`
   border-radius: 24px;
   margin-right: 7px;
   opacity: 0.4;
-  &.active {
+  &._active-topic {
     opacity: 1 !important;
   }
 

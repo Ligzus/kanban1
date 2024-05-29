@@ -55,9 +55,29 @@ export const PopBrowseTitle = styled.h3`
   line-height: 24px;
 `;
 
+export const EditInput = styled.input`
+  width: 370px;
+  outline: none;
+  padding: 14px;
+  background: transparent;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.14px;
+  margin: 20px 0;
+  &::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1px;
+    color: #94A6BE;
+    letter-spacing: -0.14px;
+  }
+`;
+
 export const CategoriesThemeTop = styled.div`
-  background-color: #FFE4C2;
-  color: #FF6D00;
+  background-color: '';
+  color: '';
   border-radius: 4px;
   padding: 8px 20px;
   opacity: 1;
@@ -85,12 +105,13 @@ export const StatusTheme = styled.div`
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
+  cursor: pointer;
 
-  &.hide {
+  &._hide {
     display: none;
   }
 
-  &.gray {
+  &._gray {
     background: #94A6BE;
     color: #FFFFFF;
   }
@@ -100,7 +121,6 @@ export const StatusThemeText = styled.p`
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
-  color: #ffff;
 `;
 
 export const PopBrowseWrap = styled.div`
@@ -151,9 +171,40 @@ export const TextArea = styled.textarea`
   }
 `;
 
+export const EditTextArea = styled.textarea`
+  width: 100%;
+  outline: none;
+  padding: 14px;
+  background: transparent;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.14px;
+  margin-top: 14px;
+  height: 200px;
+  &::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1px;
+    color: #94A6BE;
+    letter-spacing: -0.14px;
+  }
+`;
+
 export const CalendarWrapper = styled.div`
   width: 182px;
   margin-bottom: 20px;
+
+  p {
+    font-size: 10px;
+    padding-left: 15px;
+    color: #94A6BE;
+  }
+
+  p span {
+    color: #000000;
+  }
 `;
 
 export const CalendarTitle = styled.p`
@@ -248,6 +299,20 @@ export const BtnBrowseEdit = styled(Button)`
     margin-right: 8px;
   }
 `;
+
+export const BtnBrowseCancel = styled(Button)`
+  &._btn-bor {
+    margin-left: 8px;
+  }
+`
+
+export const BtnBrowseDel = styled(Button)`
+  &._btn-bor {
+    margin-left: 8px;
+  }
+`
+
+export const BtnBrowseSave = styled(Button)``;
 
 export const BtnBrowseDelete = styled(Button)``;
 

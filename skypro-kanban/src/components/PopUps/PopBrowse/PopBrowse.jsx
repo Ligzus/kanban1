@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Calendar from '../../Calendar/Calendar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   PopBrowseWrapper,
   PopBrowseContainer,
@@ -20,74 +20,156 @@ import {
   TextArea,
   CalendarWrapper,
   CalendarTitle,
-  ThemeDownCategories,
-  CategoriesText,
-  CategoriesTheme,
   PopBrowseBtnBrowse,
   BtnBrowseEdit,
   BtnBrowseDelete,
   BtnBrowseClose,
   Descrbtion,
-  BtnGroup
+  BtnGroup,
+  BtnBrowseCancel,
+  BtnBrowseDel,
+  BtnBrowseSave,
+  EditInput,
+  EditTextArea,
 } from './PopBrowse.styled';
+import { useTasks } from '../../../hooks/useTasks';
+import { format } from 'date-fns';
+import { deleteTodo } from '../../../api';
+import { useUser } from '../../../hooks/useUser';
 
 const PopBrowse = ({ id }) => {
+  const { tasks, setTasks } = useTasks();
+  const task = tasks.find(task => task._id === id);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState(task?.status || "Без статуса");
+  const [title, setTitle] = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const navigate = useNavigate();
+  const { user } = useUser();
+
+  if (!task) {
+    return;
+  }
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditMode(false);
+    setTitle(task.title);
+    setDescription(task.description);
+    setCurrentStatus(task.status); 
+  };
+
+  const handleStatusClick = (status) => {
+    setCurrentStatus(status);
+  };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      const updatedTasks = await deleteTodo({
+        id: task._id,
+        user
+      });
+      setTasks(updatedTasks.tasks);
+      navigate('/'); 
+    } catch (error) {
+      console.error('Ошибка при удалении задачи:', error);
+    }
+  };
+
   return (
     <PopBrowseWrapper id="popBrowse">
       <PopBrowseContainer>
         <PopBrowseBlock>
           <PopBrowseContent>
             <PopBrowseTopBlock>
-              <PopBrowseTitle>Название задачи {id}</PopBrowseTitle>
-              <CategoriesThemeTop>
-                <p>Web Design</p>
+              {isEditMode ? (
+                <EditInput placeholder="Введите незвание задачи..."
+                  type="text"
+                  value={title}
+                  onChange={handleTitleChange}
+                />
+              ) : (
+                <PopBrowseTitle>{task.title}</PopBrowseTitle>
+              )}
+              <CategoriesThemeTop
+                className={`
+                  ${task.topic === 'Research' ? '_green' : ''}
+                  ${task.topic === 'Web Design' ? '_orange' : ''}
+                  ${task.topic === 'Copywriting' ? '_purple' : ''}
+                  ${task.topic === 'Без категории' ? '_gray' : ''}
+                `}
+              >
+                <p>{task.topic}</p>
               </CategoriesThemeTop>
             </PopBrowseTopBlock>
             <Status>
               <StatusText className="subttl">Статус</StatusText>
               <StatusThemes>
-                <StatusTheme className="_hide">
-                  <StatusThemeText>Без статуса</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className="_gray">
-                  <StatusThemeText>Нужно сделать</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className="_hide">
-                  <StatusThemeText>В работе</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className="_hide">
-                  <StatusThemeText>Тестирование</StatusThemeText>
-                </StatusTheme>
-                <StatusTheme className="_hide">
-                  <StatusThemeText>Готово</StatusThemeText>
-                </StatusTheme>
+                {isEditMode ? (
+                  ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"].map((status) => (
+                    <StatusTheme
+                      key={status}
+                      className={currentStatus === status ? "_gray" : ""}
+                      onClick={() => handleStatusClick(status)}
+                    >
+                      <StatusThemeText>{status}</StatusThemeText>
+                    </StatusTheme>
+                  ))
+                ) : (
+                  <StatusTheme className="_gray">
+                    <StatusThemeText>{currentStatus}</StatusThemeText>
+                  </StatusTheme>
+                )}
               </StatusThemes>
             </Status>
             <PopBrowseWrap>
               <FormBrowse id="formBrowseCard" action="#">
                 <FormBrowseBlock>
-                    <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
-                  <TextArea name="text" id="textArea01" readOnly placeholder="Введите описание задачи..."></TextArea>
+                  <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
+                  {isEditMode ? (
+                    <EditTextArea placeholder="Введите описание задачи..."
+                      type="text"
+                      value={description}
+                      onChange={handleDescriptionChange}
+                    />
+                    ) : (
+                    <TextArea id="textArea01" readOnly value={description}></TextArea>
+                    )}
                 </FormBrowseBlock>
               </FormBrowse>
               <CalendarWrapper>
                 <CalendarTitle>Даты</CalendarTitle>
-
-                {/* Компонент Календарь */}
-                <Calendar /> 
-
+                <Calendar date={task.date} setSelected={() => {}} readOnly={!isEditMode} />
+                <p>Срок исполнения: <span>{format(new Date(task.date), 'dd.MM.yyyy')}</span></p>
               </CalendarWrapper>
             </PopBrowseWrap>
-            <ThemeDownCategories>
-              <CategoriesText>Категории</CategoriesText>
-              <CategoriesTheme>Категория 1</CategoriesTheme>
-              <CategoriesTheme>Категория 2</CategoriesTheme>
-            </ThemeDownCategories>
+
             <PopBrowseBtnBrowse>
-                <BtnGroup>
-                    <BtnBrowseEdit className="_btn-bor _hover03">Редактировать</BtnBrowseEdit>
-                    <BtnBrowseDelete className="_btn-bg _hover01">Удалить</BtnBrowseDelete>
-                </BtnGroup>
+              <BtnGroup>
+                {isEditMode ? (
+                  <div className='editButtons'>
+                    <BtnBrowseSave className="_btn-bg _hover01">Сохранить</BtnBrowseSave>
+                    <BtnBrowseCancel className="_btn-bor _hover03" onClick={handleCancelClick}>Отменить</BtnBrowseCancel>
+                    <BtnBrowseDel className="_btn-bor _hover03" onClick={handleDeleteClick}>Удалить задачу</BtnBrowseDel>
+                  </div>
+                ) : (
+                  <div className='mainButtons'>
+                    <BtnBrowseEdit className="_btn-bor _hover03" onClick={handleEditClick}>Редактировать</BtnBrowseEdit>
+                    <BtnBrowseDelete className="_btn-bg _hover01" onClick={handleDeleteClick}>Удалить</BtnBrowseDelete>
+                  </div>
+                )}
+              </BtnGroup>
               <BtnBrowseClose className="_btn-bor _hover03">
                 <Link to="/">Закрыть</Link>
               </BtnBrowseClose>

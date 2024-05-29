@@ -1,6 +1,7 @@
 const baseHost = 'https://wedev-api.sky.pro/api/kanban';
 const userHost = 'https://wedev-api.sky.pro/api/user';
 
+
 // Получить список задач:
 export async function getTodos({ token }) {
     const response = await fetch(baseHost, {
@@ -9,13 +10,73 @@ export async function getTodos({ token }) {
         }
     });
 
-    if (response.status === !200) {
+    if (response.status === !201) {
         throw new Error('Ошибка');
     }
 
     const data = await response.json();
     return data;
 }
+
+// Добавить новую задачу:
+export async function postTodo({ user, title, topic, status, description, date }) {
+
+    return fetch(baseHost, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        title: title,
+        topic: topic,
+        status: status,
+        description: description,
+        date: date,
+      })
+    });
+}
+
+// Изменить задачу:
+export async function editTodo({ id, user, title, topic, status, description, date }) {
+    const response = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`,
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+            title: title,
+            topic: topic,
+            status: status,
+            description: description,
+            date: date,
+        })
+    });
+
+    if (response.status === !201) {
+        throw new Error('Ошибка');
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+// Удалить задачу:
+export async function deleteTodo({ id, user }) {
+    const response = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+        headers: {
+            Authorization: `Bearer ${user.token}`,
+        },
+        method: 'DELETE',
+    });
+
+    if (response.status === !201) {
+        throw new Error('Ошибка');
+    }
+
+    const data = await response.json();
+    return data;
+}
+
 
 // Зарегистрироваться:
 export function register({ login, name, password }) {

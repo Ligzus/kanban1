@@ -10,33 +10,36 @@ import PrivateRoute from './PrivateRoute.jsx'
 import ExitPage from './pages/ExitPage/ExitPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import NewCard from './pages/NewCardPage/NewCard.jsx'
+import { UserProvider } from './comtexts/user.jsx'
+import { TaskProvider } from './comtexts/tasks.jsx'
 
 
 function App() {
-  const [cards, setCards] = useState([]);
-  const [token, setToken] = useState(null);
 
   return ( 
     <>
       <GlobalStyle />
 
-      <Routes>
-        
-        <Route element={<PrivateRoute token={token} />} >
-          <Route path='/' element={<HomePage token={token} cards={cards} setCards={setCards} />}>
-            <Route path='/card/:id' element={<CurrentCard />} />
-            <Route path='/exit' element={<ExitPage setToken={setToken} />} />
-            <Route path='/newcard' element={<NewCard cards={cards} setCards={setCards} />} />
+      <UserProvider>
+        <Routes>
+          
+          <Route element={<PrivateRoute />} >
+            <Route element={<TaskProvider />}>
+              <Route path='/' element={<HomePage />}>
+                <Route path='/card/:id' element={<CurrentCard />} />
+                <Route path='/exit' element={<ExitPage />} />
+                <Route path='/newcard' element={<NewCard />} />
+              </Route>
+            </Route>            
           </Route>
-        </Route>
 
-        <Route path='/login' element={<LoginPage setToken={setToken} />} />
-        <Route path='/register' element={<RegisterPage setToken={setToken} />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
 
-        <Route path="*" element={<NotFoundPage />} />
-                
-      </Routes>
-
+          <Route path="*" element={<NotFoundPage />} />
+                  
+        </Routes>
+      </UserProvider>
     </>
   )
 }

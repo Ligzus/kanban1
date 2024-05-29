@@ -2,9 +2,12 @@ import { useState } from "react";
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormLogin, ModalTtl, Wrapper, ModalFormGroupLink } from "./Login.styled";
 import { useNavigate } from 'react-router-dom';
 import { login } from "../../api";
+import { useUser } from "../../hooks/useUser";
 
-function LoginPage({ setToken }) {
+function LoginPage() {
     let navigate = useNavigate();
+    const {loginUser} = useUser();
+
 
     const [formValues, setFormValues] = useState({
         login: '',
@@ -22,11 +25,10 @@ function LoginPage({ setToken }) {
         const response = await login({
             login: formValues.login,
             password: formValues.password,
-        });       
+        });   
 
         if (response?.user) {
-            setToken(response.user.token);
-            navigate('/');
+           loginUser(response.user) 
         }         
     }
     
