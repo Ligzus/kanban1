@@ -34,7 +34,7 @@ import {
 } from './PopBrowse.styled';
 import { useTasks } from '../../../hooks/useTasks';
 import { format } from 'date-fns';
-import { deleteTodo } from '../../../api';
+import { deleteTodo, editTodo } from '../../../api';
 import { useUser } from '../../../hooks/useUser';
 
 const PopBrowse = ({ id }) => {
@@ -87,6 +87,24 @@ const PopBrowse = ({ id }) => {
     }
   };
 
+  const handleSaveClick = async () => {
+    try {
+      const updatedTasks = await editTodo({
+        id: task._id,
+        user,
+        title,
+        topic: task.topic,
+        status: currentStatus,
+        description,
+        date: task.date
+      });
+      setTasks(updatedTasks.tasks);
+      setIsEditMode(false);
+    } catch (error) {
+      console.error('Ошибка при редактировании задачи:', error);
+    }
+  };
+
   return (
     <PopBrowseWrapper id="popBrowse">
       <PopBrowseContainer>
@@ -94,7 +112,8 @@ const PopBrowse = ({ id }) => {
           <PopBrowseContent>
             <PopBrowseTopBlock>
               {isEditMode ? (
-                <EditInput placeholder="Введите незвание задачи..."
+                <EditInput
+                  placeholder="Введите название задачи..."
                   type="text"
                   value={title}
                   onChange={handleTitleChange}
@@ -138,14 +157,14 @@ const PopBrowse = ({ id }) => {
                 <FormBrowseBlock>
                   <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
                   {isEditMode ? (
-                    <EditTextArea placeholder="Введите описание задачи..."
-                      type="text"
+                    <EditTextArea
+                      placeholder="Введите описание задачи..."
                       value={description}
                       onChange={handleDescriptionChange}
                     />
-                    ) : (
+                  ) : (
                     <TextArea id="textArea01" readOnly value={description}></TextArea>
-                    )}
+                  )}
                 </FormBrowseBlock>
               </FormBrowse>
               <CalendarWrapper>
@@ -159,7 +178,7 @@ const PopBrowse = ({ id }) => {
               <BtnGroup>
                 {isEditMode ? (
                   <div className='editButtons'>
-                    <BtnBrowseSave className="_btn-bg _hover01">Сохранить</BtnBrowseSave>
+                    <BtnBrowseSave className="_btn-bg _hover01" onClick={handleSaveClick}>Сохранить</BtnBrowseSave>
                     <BtnBrowseCancel className="_btn-bor _hover03" onClick={handleCancelClick}>Отменить</BtnBrowseCancel>
                     <BtnBrowseDel className="_btn-bor _hover03" onClick={handleDeleteClick}>Удалить задачу</BtnBrowseDel>
                   </div>
