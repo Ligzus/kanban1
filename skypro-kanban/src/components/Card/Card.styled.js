@@ -18,6 +18,18 @@ export const CardsCard = styled.div`
     align-items: flex-start;
     justify-content: stretch;
     padding: 15px 13px 19px;
+
+    @media screen and (max-width: 1200px) {
+        width: 220px;
+        height: 130px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: stretch;
+        padding: 15px 13px 19px;
+    }
 `;
 
 export const CardBtn = styled.div `

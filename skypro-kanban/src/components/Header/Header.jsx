@@ -21,11 +21,11 @@ const Header = () => {
             </a>
           </div>
 
-          <div className="header__logo _dark">
+          {/* <div className="header__logo _dark">
             <a href="" target="_self">
               <S.HeaderLogo src="images/logo_dark.png" alt="logo" />
             </a>
-          </div>
+          </div> */}
           <S.Nav>
             <S.CreateTaskBtn id="btnMainNew">
               <Link to={'/newcard'}>Создать новую задачу</Link>
