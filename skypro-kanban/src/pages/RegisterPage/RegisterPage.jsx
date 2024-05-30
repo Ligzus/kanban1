@@ -2,9 +2,12 @@ import { useState } from "react";
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormGroupLink, ModalFormLogin, ModalTtl, Wrapper } from "../LoginPage/Login.styled";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api";
+import { useUser } from "../../hooks/useUser";
 
-function RegisterPage({ setToken }) {
+function RegisterPage() {
     let navigate = useNavigate();
+    const { loginUser } = useUser();
+    
     function goToLogin() {
         navigate('/login');
     }
@@ -14,43 +17,29 @@ function RegisterPage({ setToken }) {
         login: '',
         password: '',
     });   
-    
+
     const onInputChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
     }
-   
+
     const onRegister = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await register({
-                name: formValues.firstName,
-                login: formValues.login,
-                password: formValues.password,
-            });       
-    
-            const data = await response.json();
-            setToken(data.user.token);
-            navigate('/');
-            
-            if (response.status === 400) {
-                throw new Error('Пользователь уже существует');                                             
-            }
-            
-        } catch (error) {
-            if (error.message === 'Пользователь уже существует') {
-                alert('Кажется у вас уже есть аккаунт, войдите в него');   
-                navigate('/login');     
-            } else {
-                console.log(error.message);
-            }
+       
+        const response = await register({
+            name: formValues.firstName,
+            login: formValues.login,
+            password: formValues.password,
+        });   
+
+        if (response?.user) {
+            loginUser(response.user)
         }
-               
     }
 
     return (
-		<Wrapper>
+        <Wrapper>
             <ContainerSignin>
                 <Modal>
                     <ModalBlock>
@@ -59,7 +48,7 @@ function RegisterPage({ setToken }) {
                         </div>
                         <ModalFormLogin id="formLogUp" action="#" onSubmit={onRegister}>
 
-							<LoginInput 
+                            <LoginInput 
                                 type="text" 
                                 name="firstName" 
                                 id="first-name" 
