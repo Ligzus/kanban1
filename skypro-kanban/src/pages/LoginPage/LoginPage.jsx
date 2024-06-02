@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormLogin, ModalTtl, Wrapper, ModalFormGroupLink } from "./Login.styled";
 import { useNavigate } from 'react-router-dom';
 import { login } from "../../api";
@@ -6,19 +6,30 @@ import { useUser } from "../../hooks/useUser";
 
 function LoginPage() {
     let navigate = useNavigate();
-    const {loginUser} = useUser();
-
+    const { loginUser } = useUser();
 
     const [formValues, setFormValues] = useState({
         login: '',
         password: '',
     });   
-    
+
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+        const checkFormValidity = () => {
+            const isLoginValid = formValues.login.trim() !== '';
+            const isPasswordValid = formValues.password.trim() !== '';
+            setIsFormValid(isLoginValid && isPasswordValid);
+        };
+
+        checkFormValidity();
+    }, [formValues]);
+
     const onInputChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
-    }
-   
+    };
+
     const onLogin = async (event) => {
         event.preventDefault();
 
@@ -28,9 +39,9 @@ function LoginPage() {
         });   
 
         if (response?.user) {
-           loginUser(response.user) 
+           loginUser(response.user); 
         }         
-    }
+    };
     
     return (        
         <Wrapper>
@@ -42,12 +53,13 @@ function LoginPage() {
                         </div>
                         <ModalFormLogin id="formLogIn" action="#" onSubmit={onLogin}>
                             <LoginInput 
-                                type="text" 
+                                type="email" 
                                 name="login" 
                                 id="formlogin" 
                                 placeholder="Эл. почта"
                                 value={formValues.login}
                                 onChange={onInputChange}
+                                required
                             />
 
                             <LoginInputPassword 
@@ -57,10 +69,15 @@ function LoginPage() {
                                 placeholder="Пароль"
                                 value={formValues.password}
                                 onChange={onInputChange}
+                                required
                             />                
 
-
-                            <ModalBtnEnter id="btnEnter" type="submit">
+                            <ModalBtnEnter 
+                                id="btnEnter" 
+                                type="submit" 
+                                style={{ opacity: isFormValid ? 1 : 0.5 }} 
+                                disabled={!isFormValid}
+                            >
                                 <ModalBtnEnterLink>Войти</ModalBtnEnterLink>
                             </ModalBtnEnter>                      
 
@@ -68,7 +85,6 @@ function LoginPage() {
                                 <ModalFormGroupText>Нужно зарегистрироваться?</ModalFormGroupText>
                                 <ModalFormGroupLink onClick={() => navigate('/register')}>Регистрируйтесь здесь</ModalFormGroupLink>
                             </ModalFormGroup>
-
                         </ModalFormLogin>
                     </ModalBlock>
                 </Modal>

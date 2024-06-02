@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ContainerSignin, LoginInput, LoginInputPassword, Modal, ModalBlock, ModalBtnEnter, ModalBtnEnterLink, ModalFormGroup, ModalFormGroupText, ModalFormGroupLink, ModalFormLogin, ModalTtl, Wrapper } from "../LoginPage/Login.styled";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../api";
@@ -17,6 +17,19 @@ function RegisterPage() {
         login: '',
         password: '',
     });   
+
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+        const checkFormValidity = () => {
+            const isNmaeValid = formValues.firstName.trim() !== '';
+            const isLoginValid = formValues.login.trim() !== '';
+            const isPasswordValid = formValues.password.trim() !== '';
+            setIsFormValid(isLoginValid && isPasswordValid && isNmaeValid);
+        };
+
+        checkFormValidity();
+    }, [formValues]);
 
     const onInputChange = (event) => {
         const { name, value } = event.target;
@@ -54,7 +67,8 @@ function RegisterPage() {
                                 id="first-name" 
                                 placeholder="Имя"  
                                 value={formValues.firstName}
-                                onChange={onInputChange}                          
+                                onChange={onInputChange}  
+                                required                        
                             />
 
                             <LoginInput 
@@ -64,6 +78,7 @@ function RegisterPage() {
                                 placeholder="Эл. почта"
                                 value={formValues.login}
                                 onChange={onInputChange}
+                                required
                             />
 
                             <LoginInputPassword 
@@ -73,9 +88,15 @@ function RegisterPage() {
                                 placeholder="Пароль"
                                 value={formValues.password}
                                 onChange={onInputChange}
+                                required
                             />                   
 
-                            <ModalBtnEnter id="SignUpEnter" type="submit">
+                            <ModalBtnEnter 
+                                id="SignUpEnter" 
+                                type="submit"
+                                style={{ opacity: isFormValid ? 1 : 0.5 }} 
+                                disabled={!isFormValid}
+                            >
                                 <ModalBtnEnterLink>Зарегистрироваться</ModalBtnEnterLink>
                             </ModalBtnEnter>                      
 
