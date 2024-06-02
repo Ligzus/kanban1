@@ -453,3 +453,19 @@ export const BtnEditEdit = styled(Button)`
 export const BtnEditDelete = styled(Button)``;
 
 export const BtnEditClose = styled(Button)``;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px;
+  display: block;
+`;
+
+export const ErrorTitleText = styled.p`
+  color: red;
+  position: absolute;
+  font-size: 12px;
+  top: 110px;
+  left: 35px;
+`;
