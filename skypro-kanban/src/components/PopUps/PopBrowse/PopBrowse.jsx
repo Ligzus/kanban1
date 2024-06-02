@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from '../../Calendar/Calendar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   PopBrowseWrapper,
   PopBrowseContainer,
@@ -39,7 +39,8 @@ import { format } from 'date-fns';
 import { deleteTodo, editTodo } from '../../../api';
 import { useUser } from '../../../hooks/useUser';
 
-const PopBrowse = ({ id }) => {
+const PopBrowse = () => {
+  let { id } = useParams();
   const { tasks, setTasks } = useTasks();
   const task = tasks.find(task => task._id === id);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -67,6 +68,7 @@ const PopBrowse = ({ id }) => {
     if (!title.trim()) errors.title = <ErrorTitleText>Название задачи не может быть пустым</ErrorTitleText>;
     if (!description.trim()) errors.description = <ErrorText>Описание задачи не может быть пустым</ErrorText>;
     setErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleEditClick = () => {

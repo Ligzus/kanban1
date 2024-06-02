@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from '../../Calendar/Calendar';
 import { PopNewCardClose, PopNewCardContainer, PopNewCardBlock, PopNewCardContent, PopNewCardTitle, PopNewCardWrap, PopNewCardForm, FormNewBlock, FormNewInput, FormNewArea, CalendarContainer, CalendarTitle, Categories, CategoryTitle, CategoriesThemes, CategoryTheme, FormNewCreateButton, PopNewCards, SubTtl } from './PopNewCard.styled';
@@ -24,36 +24,47 @@ const PopNewCard = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+        const checkFormValidity = () => {
+            const isTitleValid = formData.title.trim() !== '';
+            const isDescriptionValid = formData.description.trim() !== '';
+            const isTopicValid = formData.topic;
+            const isDateValid = formData.date;
+            setIsFormValid(isTitleValid && isDescriptionValid && isTopicValid && isDateValid);
+        };
+
+        checkFormValidity();
+    }, [formData]);
+
   const addCard = async () => {
-    try {
-      const newTask = {
-        title: formData.title,
-        topic: formData.topic,
-        status: formData.status,
-        description: formData.description,
-        date: formData.date,
-      };
+    
+    const newTask = {
+      title: formData.title,
+      topic: formData.topic,
+      status: formData.status,
+      description: formData.description,
+      date: formData.date,
+    };
 
-      const response = await postTodo({ 
-        user, 
-        title: newTask.title, 
-        topic: newTask.topic, 
-        status: newTask.status, 
-        description: newTask.description, 
-        date: newTask.date,
-      });
+    const response = await postTodo({ 
+      user, 
+      title: newTask.title, 
+      topic: newTask.topic, 
+      status: newTask.status, 
+      description: newTask.description, 
+      date: newTask.date,
+    });
 
-      if (response.ok) {
-        const updatedTasks = await response.json();
-        setTasks(updatedTasks.tasks); 
-        navigate('/');
-      } else {
-        const errorText = await response.text();
-        console.error('Ошибка:', response.status, errorText);
-      }
-    } catch (error) {
-      console.error(error);
+    if (response.ok) {
+      const updatedTasks = await response.json();
+      setTasks(updatedTasks.tasks); 
+      navigate('/');
+    } else {
+      alert('Что-то пошло не так, попробуйте снова...')
     }
+    
   };
 
   const handleCloseBtn = () => {
@@ -97,6 +108,7 @@ const PopNewCard = () => {
                 <Calendar 
                   date={formData.date}
                   setSelected={(date) => setFormData({ ...formData, date: date })}
+
                 />
               </CalendarContainer>
             </PopNewCardWrap>
@@ -123,9 +135,12 @@ const PopNewCard = () => {
                 </CategoryTheme>
               </CategoriesThemes>
             </Categories>
-            <FormNewCreateButton id="btnCreate" onClick={addCard}>
-              Создать задачу
-            </FormNewCreateButton>
+            <FormNewCreateButton 
+              id="btnCreate" 
+              onClick={addCard} 
+              style={{ opacity: isFormValid ? 1 : 0.5 }}                                 
+              disabled={!isFormValid}
+            >Создать задачу</FormNewCreateButton>
           </PopNewCardContent>
         </PopNewCardBlock>
       </PopNewCardContainer>

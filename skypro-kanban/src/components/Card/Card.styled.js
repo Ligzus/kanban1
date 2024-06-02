@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { topicStyles } from "../../lib/topic";
+import { topicStyles } from "../../style/shared/topic";
 
 export const CardsItem = styled.div`
     padding: 5px;

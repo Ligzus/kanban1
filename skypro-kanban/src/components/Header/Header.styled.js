@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../../lib/Button.styled";
+import { Button } from "../../style/shared/Button.styled";
 
 export const Header = styled.header`
     width: 100%;
