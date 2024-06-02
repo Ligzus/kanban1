@@ -10,8 +10,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
 import ExitPage from './pages/ExitPage/ExitPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import NewCard from './pages/NewCardPage/NewCard.jsx'
-import { UserProvider } from './comtexts/user.jsx'
-import { TaskProvider } from './comtexts/tasks.jsx'
+import { UserProvider } from './contexts/user.jsx'
+import { TaskProvider } from './contexts/tasks.jsx'
 
 
 function App() {

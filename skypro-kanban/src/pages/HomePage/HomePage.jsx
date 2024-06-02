@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header.jsx';
 import Main from '../../components/Main/Main.jsx';
 import { Loader } from '../../style/shared/Loader.styled.js';
 import { getTodos } from '../../api.js';
-import { UserContext } from '../../comtexts/user.jsx';
+import { UserContext } from '../../contexts/user.jsx';
 import { useTasks } from '../../hooks/useTasks.jsx';
 import { Wrapper } from "./HomePage.styled.js";
 
