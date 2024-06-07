@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const PopBrowseWrapper = styled.div`
   width: 100%;
@@ -10,6 +9,10 @@ export const PopBrowseWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 7;
+
+  @media screen and (max-width: 660px) {
+    top: 70px;
+  }
 `;
 
 export const PopBrowseContainer = styled.div`
@@ -22,6 +25,11 @@ export const PopBrowseContainer = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
+
+  @media screen and (max-width: 660px) {
+    padding: 0;
+    justify-content: flex-start;
+  }
 `;
 
 export const PopBrowseBlock = styled.div`
@@ -34,11 +42,23 @@ export const PopBrowseBlock = styled.div`
   border-radius: 10px;
   border: 0.7px solid #D4DBE5;
   position: relative;
+
+  @media screen and (max-width: 660px) {
+    border-radius: 0;
+  }
+
+  @media screen and (max-width: 495px) {
+    padding: 20px 16px 32px;
+  }
 `;
 
 export const PopBrowseContent = styled.div`
   display: block;
   text-align: left;
+
+  @media screen and (max-width: 495px) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const PopBrowseTopBlock = styled.div`
@@ -73,6 +93,12 @@ export const EditInput = styled.input`
     color: #94A6BE;
     letter-spacing: -0.14px;
   }
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    height: 37px;
+  }
+
 `;
 
 export const CategoriesThemeTop = styled.div`
@@ -81,6 +107,30 @@ export const CategoriesThemeTop = styled.div`
   border-radius: 4px;
   padding: 8px 20px;
   opacity: 1;
+  
+  &._orange {
+  background-color: #FFE4C2;
+  color: #FF6D00;
+  }
+
+  &._green {
+    background-color: #B4FDD1;
+    color: #06B16E;
+  }
+
+  &._purple {
+    background-color: #E9D4FF;
+    color: #9A48F1;
+  }
+
+  &._gray {
+    background: #94A6BE;
+    color: #FFFFFF;
+  }
+
+  &._active-category {
+    opacity: 1 !important;
+  }
 `;
 
 export const Status = styled.div`
@@ -127,6 +177,10 @@ export const PopBrowseWrap = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media screen and (max-width: 660px) {
+    display: block;
+  }
 `;
 
 export const FormBrowse = styled.form`
@@ -169,6 +223,10 @@ export const TextArea = styled.textarea`
     color: #94A6BE;
     letter-spacing: -0.14px;
   }
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+  }
 `;
 
 export const EditTextArea = styled.textarea`
@@ -196,14 +254,27 @@ export const CalendarWrapper = styled.div`
   width: 182px;
   margin-bottom: 20px;
 
+  @media screen and (max-width: 660px) {
+    max-width: 340px;
+    width: 100%;
+  }
+
   p {
     font-size: 10px;
     padding-left: 15px;
     color: #94A6BE;
+
+    @media screen and (max-width: 660px) {
+      font-size: 14px;
+    }
   }
 
   p span {
     color: #000000;
+  }
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
   }
 `;
 
@@ -239,21 +310,36 @@ export const PopBrowseBtnBrowse = styled.div`
   align-items: flex-start;
   justify-content: space-between;
 
+  @media screen and (max-width: 495px) {
+    display: block;
+  }
+
   button {
     height: 30px;
     margin-bottom: 10px;
     padding: 0 14px;
+
+    @media screen and (max-width: 495px) {
+      width: 100%;
+      height: 40px;
+    }
   }
 
   .btn-group {
     button {
       margin-right: 8px;
     }
+
+    @media screen and (max-width: 495px) {
+      margin-right: 0px;
+    }
   }
 `;
 
 export const BtnGroup = styled.div`
-    margin-right: 8px;
+  margin-right: 8px;
+
+  
 `;
 
 export const Button = styled.button`
@@ -297,18 +383,30 @@ export const Button = styled.button`
 export const BtnBrowseEdit = styled(Button)`
   &._btn-bor {
     margin-right: 8px;
+
+    @media screen and (max-width: 495px) {
+      margin-right: 0px;
+    }
   }
 `;
 
 export const BtnBrowseCancel = styled(Button)`
   &._btn-bor {
     margin-left: 8px;
+
+    @media screen and (max-width: 495px) {
+      margin-left: 0px;      
+    }
   }
 `
 
 export const BtnBrowseDel = styled(Button)`
   &._btn-bor {
     margin-left: 8px;
+
+    @media screen and (max-width: 495px) {
+      margin-left: 0px;
+    }
   }
 `
 
@@ -322,11 +420,16 @@ export const BtnBrowseClose = styled(Button)`
   }
 `;
 
+
 export const BtnEditGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media screen and (max-width: 495px) {
+    display: block;
+  }
 
   button {
     height: 30px;
@@ -350,3 +453,19 @@ export const BtnEditEdit = styled(Button)`
 export const BtnEditDelete = styled(Button)``;
 
 export const BtnEditClose = styled(Button)``;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px;
+  display: block;
+`;
+
+export const ErrorTitleText = styled.p`
+  color: red;
+  position: absolute;
+  font-size: 12px;
+  top: 110px;
+  left: 35px;
+`;

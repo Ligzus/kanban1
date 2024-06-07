@@ -9,6 +9,10 @@ export const PopNewCards = styled.div`
   top: 0;
   left: 0;
   z-index: 6;
+
+  @media screen and (max-width: 660px) {
+    top: 70px;
+  }
 `;
 
 export const PopNewCardContainer = styled.div`
@@ -21,6 +25,16 @@ export const PopNewCardContainer = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
+
+  @media screen and (max-width: 660px) {
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  @media screen and (max-width: 495px) {
+    padding: 0;
+    justify-content: flex-start;
+  }
 `;
 
 export const PopNewCardBlock = styled.div`
@@ -33,6 +47,14 @@ export const PopNewCardBlock = styled.div`
   border-radius: 10px;
   border: 0.7px solid #D4DBE5;
   position: relative;
+
+  @media screen and (max-width: 660px) {
+    border-radius: 0;
+  }
+
+  @media screen and (max-width: 495px) {
+    padding: 20px 16px 32px;
+  }
 `;
 
 export const PopNewCardContent = styled.div`
@@ -64,6 +86,10 @@ export const PopNewCardWrap = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media screen and (max-width: 660px) {
+    display: block;
+  }
 `;
 
 export const PopNewCardForm = styled.form`
@@ -71,6 +97,12 @@ export const PopNewCardForm = styled.form`
   width: 100%;
   display: block;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+  }
 `;
 
 export const FormNewBlock = styled.div`
@@ -117,6 +149,11 @@ export const FormNewArea = styled.textarea`
     color: #94A6BE;
     letter-spacing: -0.14px;
   }
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    height: 34px;
+  }
 `;
 
 export const CalendarContainer = styled.div`
@@ -162,6 +199,27 @@ export const CategoryTheme = styled.div`
   border-radius: 24px;
   margin-right: 7px;
   opacity: 0.4;
+
+  &._orange {
+  background-color: #FFE4C2;
+  color: #FF6D00;
+  }
+
+  &._green {
+    background-color: #B4FDD1;
+    color: #06B16E;
+  }
+
+  &._purple {
+    background-color: #E9D4FF;
+    color: #9A48F1;
+  }
+
+  &._gray {
+    background: #94A6BE;
+    color: #FFFFFF;
+  }
+  
   &._active-topic {
     opacity: 1 !important;
   }
@@ -188,6 +246,11 @@ export const FormNewCreateButton = styled.button`
   float: right;
   &:hover {
     background-color: #33399b;
+  }
+
+  @media screen and (max-width: 495px) {
+    width: 100%;
+    height: 40px;
   }
 `;
 

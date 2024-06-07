@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from '../../Calendar/Calendar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   PopBrowseWrapper,
   PopBrowseContainer,
@@ -31,25 +31,45 @@ import {
   BtnBrowseSave,
   EditInput,
   EditTextArea,
+  ErrorText,
+  ErrorTitleText,
 } from './PopBrowse.styled';
 import { useTasks } from '../../../hooks/useTasks';
 import { format } from 'date-fns';
 import { deleteTodo, editTodo } from '../../../api';
 import { useUser } from '../../../hooks/useUser';
 
-const PopBrowse = ({ id }) => {
+const PopBrowse = () => {
+  let { id } = useParams();
   const { tasks, setTasks } = useTasks();
   const task = tasks.find(task => task._id === id);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentStatus, setCurrentStatus] = useState(task?.status || "Без статуса");
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { user } = useUser();
 
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title);
+      setDescription(task.description);
+      setCurrentStatus(task.status);
+    }
+  }, [task]);
+
   if (!task) {
-    return;
+    return null;
   }
+
+  const validateFields = () => {
+    const errors = {};
+    if (!title.trim()) errors.title = <ErrorTitleText>Название задачи не может быть пустым</ErrorTitleText>;
+    if (!description.trim()) errors.description = <ErrorText>Описание задачи не может быть пустым</ErrorText>;
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleEditClick = () => {
     setIsEditMode(true);
@@ -60,6 +80,7 @@ const PopBrowse = ({ id }) => {
     setTitle(task.title);
     setDescription(task.description);
     setCurrentStatus(task.status); 
+    setErrors({});
   };
 
   const handleStatusClick = (status) => {
@@ -88,6 +109,8 @@ const PopBrowse = ({ id }) => {
   };
 
   const handleSaveClick = async () => {
+    if (!validateFields()) return;
+
     try {
       const updatedTasks = await editTodo({
         id: task._id,
@@ -112,12 +135,15 @@ const PopBrowse = ({ id }) => {
           <PopBrowseContent>
             <PopBrowseTopBlock>
               {isEditMode ? (
-                <EditInput
-                  placeholder="Введите название задачи..."
-                  type="text"
-                  value={title}
-                  onChange={handleTitleChange}
-                />
+                <>
+                  <EditInput
+                    placeholder="Введите название задачи..."
+                    type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                  />
+                  {errors.title && <span>{errors.title}</span>}
+                </>
               ) : (
                 <PopBrowseTitle>{task.title}</PopBrowseTitle>
               )}
@@ -157,11 +183,14 @@ const PopBrowse = ({ id }) => {
                 <FormBrowseBlock>
                   <Descrbtion htmlFor="textArea01">Описание задачи</Descrbtion>
                   {isEditMode ? (
-                    <EditTextArea
-                      placeholder="Введите описание задачи..."
-                      value={description}
-                      onChange={handleDescriptionChange}
-                    />
+                    <>
+                      <EditTextArea
+                        placeholder="Введите описание задачи..."
+                        value={description}
+                        onChange={handleDescriptionChange}
+                      />
+                      {errors.description && <span>{errors.description}</span>}
+                    </>
                   ) : (
                     <TextArea id="textArea01" readOnly value={description}></TextArea>
                   )}

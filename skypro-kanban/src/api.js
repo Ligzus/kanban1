@@ -87,6 +87,21 @@ export function register({ login, name, password }) {
             name,            
             password,
         })
+    }).then((response) => {
+        if (response.status === 400) {  
+            throw new Error('Пользователь уже существует');                                             
+        } else if (response.status === 500) {  
+            throw new Error('Ошибка сервера');                                             
+        }
+
+        return response.json();
+
+    }).catch((error) => {
+        if (error.message === 'Пользователь уже существует') {
+            alert('Кажется, у вас уже есть аккаунт, войдите в него')
+        } else if (error.message === 'Ошибка сервера') {  
+            alert('Что-то пошло не так, уже чиним')                                            
+        }
     })
 }
 

@@ -36,4 +36,8 @@ export const CalendarCustom = styled(DayPicker)`
         background-color: #94A6BE;;
         color: white;
     }
+
+    @media screen and (max-width: 660px) {
+        font-size: 10px;
+    }
 `;

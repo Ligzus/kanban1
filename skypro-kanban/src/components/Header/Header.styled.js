@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../../lib/Button.styled";
+import { Button } from "../../style/shared/Button.styled";
 
 export const Header = styled.header`
     width: 100%;
@@ -40,9 +40,21 @@ export const Nav = styled.nav`
 
 
 export const CreateTaskBtn = styled(Button)`
-    position: static;
-    width: 178px;
-    height: 30px;
+  position: static;
+  width: 178px;
+  height: 30px;
+
+  @media screen and (max-width: 495px) {
+    z-index: 3;
+    position: fixed;
+    left: 16px;
+    bottom: 30px;
+    top: auto;
+    width: calc(100vw - 32px);
+    height: 40px;
+    border-radius: 4px;
+    margin-right: 0;
+  }
 `;
 
 export const UserLink = styled.a`
