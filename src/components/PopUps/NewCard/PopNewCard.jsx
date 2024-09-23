@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from '../../Calendar/Calendar';
-import { PopNewCardClose, PopNewCardContainer, PopNewCardBlock, PopNewCardContent, PopNewCardTitle, PopNewCardWrap, PopNewCardForm, FormNewBlock, FormNewInput, FormNewArea, CalendarContainer, CalendarTitle, Categories, CategoryTitle, CategoriesThemes, CategoryTheme, FormNewCreateButton, PopNewCards, SubTtl } from './PopNewCard.styled';
+import { 
+  PopNewCardClose, PopNewCardContainer, PopNewCardBlock, PopNewCardContent, PopNewCardTitle, 
+  PopNewCardWrap, PopNewCardForm, FormNewBlock, FormNewInput, FormNewArea, CalendarContainer, 
+  CalendarTitle, Categories, CategoryTitle, CategoriesThemes, CategoryTheme, FormNewCreateButton, 
+  PopNewCards, SubTtl 
+} from './PopNewCard.styled';
 import { useTasks } from '../../../hooks/useTasks';
 import { postTodo } from '../../../api';
 import { useUser } from '../../../hooks/useUser';
@@ -10,6 +15,7 @@ const PopNewCard = () => {
   const { setTasks } = useTasks();
   const navigate = useNavigate();
   const { user } = useUser();
+  const cardRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -26,20 +32,19 @@ const PopNewCard = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
 
-    useEffect(() => {
-        const checkFormValidity = () => {
-            const isTitleValid = formData.title.trim() !== '';
-            const isDescriptionValid = formData.description.trim() !== '';
-            const isTopicValid = formData.topic;
-            const isDateValid = formData.date;
-            setIsFormValid(isTitleValid && isDescriptionValid && isTopicValid && isDateValid);
-        };
+  useEffect(() => {
+    const checkFormValidity = () => {
+      const isTitleValid = formData.title.trim() !== '';
+      const isDescriptionValid = formData.description.trim() !== '';
+      const isTopicValid = formData.topic;
+      const isDateValid = formData.date;
+      setIsFormValid(isTitleValid && isDescriptionValid && isTopicValid && isDateValid);
+    };
 
-        checkFormValidity();
-    }, [formData]);
+    checkFormValidity();
+  }, [formData]);
 
   const addCard = async () => {
-    
     const newTask = {
       title: formData.title,
       topic: formData.topic,
@@ -48,33 +53,48 @@ const PopNewCard = () => {
       date: formData.date,
     };
 
-    const response = await postTodo({ 
-      user, 
-      title: newTask.title, 
-      topic: newTask.topic, 
-      status: newTask.status, 
-      description: newTask.description, 
+    const response = await postTodo({
+      user,
+      title: newTask.title,
+      topic: newTask.topic,
+      status: newTask.status,
+      description: newTask.description,
       date: newTask.date,
     });
 
     if (response.ok) {
       const updatedTasks = await response.json();
-      setTasks(updatedTasks.tasks); 
+      setTasks(updatedTasks.tasks);
       navigate('/');
     } else {
-      alert('Что-то пошло не так, попробуйте снова...')
+      alert('Что-то пошло не так, попробуйте снова...');
     }
-    
   };
 
   const handleCloseBtn = () => {
     navigate('/');
   };
 
+  const handleClickOutside = (event) => {
+    // Проверяем, если клик был вне карточки
+    if (cardRef.current && !cardRef.current.contains(event.target)) {
+      navigate('/');
+    }
+  };
+
+  useEffect(() => {
+    // Добавляем обработчик события клика
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Удаляем обработчик при размонтировании
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <PopNewCards>
+    <PopNewCards >
       <PopNewCardContainer>
-        <PopNewCardBlock>
+        <PopNewCardBlock ref={cardRef}>
           <PopNewCardContent>
             <PopNewCardTitle>Создание задачи</PopNewCardTitle>
             <PopNewCardClose onClick={handleCloseBtn}>&#10006;</PopNewCardClose>
@@ -105,29 +125,28 @@ const PopNewCard = () => {
               </PopNewCardForm>
               <CalendarContainer>
                 <CalendarTitle>Даты</CalendarTitle>
-                <Calendar 
+                <Calendar
                   date={formData.date}
                   setSelected={(date) => setFormData({ ...formData, date: date })}
-
                 />
               </CalendarContainer>
             </PopNewCardWrap>
             <Categories>
               <CategoryTitle>Категория</CategoryTitle>
               <CategoriesThemes>
-                <CategoryTheme 
+                <CategoryTheme
                   className={`_orange ${formData.topic === 'Web Design' ? '_active-topic' : ''}`}
                   onClick={() => setFormData({ ...formData, topic: 'Web Design' })}
                 >
                   <p className="_orange">Web Design</p>
                 </CategoryTheme>
-                <CategoryTheme 
+                <CategoryTheme
                   className={`_green ${formData.topic === 'Research' ? '_active-topic' : ''}`}
                   onClick={() => setFormData({ ...formData, topic: 'Research' })}
                 >
                   <p className="_green">Research</p>
                 </CategoryTheme>
-                <CategoryTheme 
+                <CategoryTheme
                   className={`_purple ${formData.topic === 'Copywriting' ? '_active-topic' : ''}`}
                   onClick={() => setFormData({ ...formData, topic: 'Copywriting' })}
                 >
@@ -135,10 +154,10 @@ const PopNewCard = () => {
                 </CategoryTheme>
               </CategoriesThemes>
             </Categories>
-            <FormNewCreateButton 
-              id="btnCreate" 
-              onClick={addCard} 
-              style={{ opacity: isFormValid ? 1 : 0.5 }}                                 
+            <FormNewCreateButton
+              id="btnCreate"
+              onClick={addCard}
+              style={{ opacity: isFormValid ? 1 : 0.5 }}
               disabled={!isFormValid}
             >Создать задачу</FormNewCreateButton>
           </PopNewCardContent>

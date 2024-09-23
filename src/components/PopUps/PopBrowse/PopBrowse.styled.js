@@ -204,6 +204,7 @@ export const Descrbtion = styled.label`
 `;
 
 export const TextArea = styled.textarea`
+  font-family: 'Roboto', sans-serif;
   max-width: 370px;
   width: 100%;
   outline: none;
@@ -218,6 +219,8 @@ export const TextArea = styled.textarea`
   height: 200px;
 
   &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    padding-top: 8px;
     font-weight: 400;
     font-size: 14px;
     line-height: 1px;
@@ -231,6 +234,7 @@ export const TextArea = styled.textarea`
 `;
 
 export const EditTextArea = styled.textarea`
+ font-family: 'Roboto', sans-serif;
   width: 100%;
   outline: none;
   padding: 14px;
@@ -243,6 +247,8 @@ export const EditTextArea = styled.textarea`
   margin-top: 14px;
   height: 200px;
   &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    padding-top: 8px;
     font-weight: 400;
     font-size: 14px;
     line-height: 1px;

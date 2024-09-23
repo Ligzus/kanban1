@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { topicStyles } from "../../style/shared/topic";
+import { Link } from "react-router-dom";
 
 export const CardsItem = styled.div`
     padding: 5px;
@@ -8,7 +9,7 @@ export const CardsItem = styled.div`
     animation-timing-function: linear;
 `;
 
-export const CardsCard = styled.div`
+export const CardsCard = styled(Link)`
     width: 220px;
     height: 130px;
     background-color: #FFFFFF;
@@ -18,6 +19,7 @@ export const CardsCard = styled.div`
     align-items: flex-start;
     justify-content: stretch;
     padding: 15px 13px 19px;
+    overflow: hidden;
 
     @media screen and (max-width: 1200px) {
         width: 220px;
@@ -49,6 +51,7 @@ export const CardBtnDiv = styled.div `
 `;
 
 export const CardTitle = styled.h3 `
+ max-width: 220px; 
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
@@ -71,6 +74,7 @@ export const CardContent = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    overflow: hidden;
 `;
 
 export const CardDate = styled.div`

@@ -131,6 +131,7 @@ export const FormNewInput = styled.input`
 `;
 
 export const FormNewArea = styled.textarea`
+  font-family: 'Roboto', sans-serif;
   width: 100%;
   outline: none;
   padding: 14px;
@@ -143,6 +144,8 @@ export const FormNewArea = styled.textarea`
   margin-top: 14px;
   height: 200px;
   &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    padding-top: 8px;
     font-weight: 400;
     font-size: 14px;
     line-height: 1px;

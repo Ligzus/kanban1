@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Calendar from '../../Calendar/Calendar';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
@@ -51,6 +51,7 @@ const PopBrowse = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { user } = useUser();
+  const modalRef = useRef(null); // Добавляем реф для модального окна
 
   useEffect(() => {
     if (task) {
@@ -59,6 +60,19 @@ const PopBrowse = () => {
       setCurrentStatus(task.status);
     }
   }, [task]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        navigate('/'); // Закрываем модальное окно
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [navigate]);
 
   if (!task) {
     return null;
@@ -80,7 +94,7 @@ const PopBrowse = () => {
     setIsEditMode(false);
     setTitle(task.title);
     setDescription(task.description);
-    setCurrentStatus(task.status); 
+    setCurrentStatus(task.status);
     setErrors({});
   };
 
@@ -132,7 +146,7 @@ const PopBrowse = () => {
   return (
     <PopBrowseWrapper id="popBrowse">
       <PopBrowseContainer>
-        <PopBrowseBlock>
+        <PopBrowseBlock ref={modalRef}>
           <PopBrowseContent>
             <PopBrowseTopBlock>
               {isEditMode ? (

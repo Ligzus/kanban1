@@ -7,23 +7,14 @@ const Card = ({topic, title, date, id}) => {
     const topicColor = getTopicColor(topic)
     return (
         <CardsItem>
-            <CardsCard>
+            <CardsCard to={`/card/${id}`} >
                 <CardsGroup>
                     <CardTopic $topicColor= {topicColor}>
                         <TopicText>{topic}</TopicText>
-                    </CardTopic>
-                    <Link to={`/card/${id}`}>
-                        <CardBtn>
-                            <CardBtnDiv />
-                            <CardBtnDiv />
-                            <CardBtnDiv />
-                        </CardBtn> 
-                    </Link>
+                    </CardTopic> 
                 </CardsGroup>
                 <CardContent>
-                    <Link to={`/card/${id}`}>
                         <CardTitle>{title}</CardTitle>
-                    </Link>
                     <CardDate>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
                             <g clipPath="url(#clip0_1_415)">
