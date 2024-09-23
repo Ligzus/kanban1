@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const PopBrowseWrapper = styled.div`
@@ -415,11 +416,18 @@ export const BtnBrowseSave = styled(Button)``;
 export const BtnBrowseDelete = styled(Button)``;
 
 export const BtnBrowseClose = styled(Button)`
-  a {
-    text-decoration: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 `;
 
+export const BtnBrowseCloseLink = styled(Link)`
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+`;
 
 export const BtnEditGroup = styled.div`
   display: flex;
@@ -429,12 +437,6 @@ export const BtnEditGroup = styled.div`
 
   @media screen and (max-width: 495px) {
     display: block;
-  }
-
-  button {
-    height: 30px;
-    margin-bottom: 10px;
-    padding: 0 14px;
   }
 
   .btn-group {
@@ -451,8 +453,6 @@ export const BtnEditEdit = styled(Button)`
 `;
 
 export const BtnEditDelete = styled(Button)``;
-
-export const BtnEditClose = styled(Button)``;
 
 export const ErrorText = styled.p`
   color: red;

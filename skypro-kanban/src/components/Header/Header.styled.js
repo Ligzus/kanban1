@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../../style/shared/Button.styled";
+import { Link } from "react-router-dom";
 
 export const Header = styled.header`
     width: 100%;
@@ -9,6 +10,7 @@ export const Header = styled.header`
 
 export const HeaderLogo = styled.img`
     width: 85px;
+    height: 60px;
 `;
 
 export const Container = styled.div`
@@ -43,6 +45,9 @@ export const CreateTaskBtn = styled(Button)`
   position: static;
   width: 178px;
   height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (max-width: 495px) {
     z-index: 3;
@@ -55,6 +60,12 @@ export const CreateTaskBtn = styled(Button)`
     border-radius: 4px;
     margin-right: 0;
   }
+`;
+
+export const CreateTaskBtnLink = styled(Link)`
+  width: 100%;
+  height: 100%;
+  align-content: center;
 `;
 
 export const UserLink = styled.a`
@@ -242,6 +253,10 @@ export const LogoutButton = styled.button`
   color: #565EEF;
   border-radius: 4px;
   border: 1px solid #565EEF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 
   &:hover {
     background-color: #33399b;
@@ -256,4 +271,10 @@ export const LogoutButton = styled.button`
     color: #565EEF;
     text-decoration: none;
   }
+`;
+
+export const LogoutButtonLink = styled(Link)`
+  width: 100%;
+  height: 100%;
+  align-content: center;
 `;

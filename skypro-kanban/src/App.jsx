@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './App.css'
 import { GlobalStyle } from './Global.styled.js'
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage/HomePage.jsx'

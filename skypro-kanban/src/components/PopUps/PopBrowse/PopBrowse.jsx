@@ -33,6 +33,7 @@ import {
   EditTextArea,
   ErrorText,
   ErrorTitleText,
+  BtnBrowseCloseLink,
 } from './PopBrowse.styled';
 import { useTasks } from '../../../hooks/useTasks';
 import { format } from 'date-fns';
@@ -219,7 +220,7 @@ const PopBrowse = () => {
                 )}
               </BtnGroup>
               <BtnBrowseClose className="_btn-bor _hover03">
-                <Link to="/">Закрыть</Link>
+                <BtnBrowseCloseLink to="/">Закрыть</BtnBrowseCloseLink>
               </BtnBrowseClose>
             </PopBrowseBtnBrowse>
           </PopBrowseContent>
